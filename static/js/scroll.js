@@ -41,7 +41,7 @@ const ScrollManager = {
      */
     cacheElements: function() {
         this.elements.scrollToTopBtn = document.getElementById('scrollToTop');
-        this.elements.mainElement = document.querySelector('main.snap-y');
+        this.elements.mainElement = document.querySelector('main');
         this.elements.header = document.getElementById('site-header');
         this.elements.heroSection = document.getElementById('hero-section');
         this.elements.footer = document.getElementById('site-footer');
