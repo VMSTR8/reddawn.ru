@@ -1,0 +1,49 @@
+{{ define "main" }}
+<div class="min-h-screen bg-black-base flex items-center justify-center px-4 relative overflow-hidden">
+    <!-- Background grain overlay -->
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none" 
+         style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 400 400%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%224.5%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');">
+    </div>
+
+    <!-- Content container -->
+    <div class="text-center z-10 max-w-2xl">
+        <!-- 404 Number -->
+        <div class="mb-8">
+            <h1 class="text-8xl sm:text-9xl md:text-[12rem] font-russo text-red-dawn leading-none tracking-tighter">
+                404
+            </h1>
+        </div>
+
+        <!-- Message -->
+        <div class="space-y-4 mb-8">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-russo text-text-primary">
+                Страница не найдена
+            </h2>
+            <p class="text-base sm:text-lg text-gray-400 font-roboto-condensed max-w-md mx-auto">
+                Похоже, вы заблудились на поле боя. Эта позиция не существует или была эвакуирована.
+            </p>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a href="{{ .Site.BaseURL }}" 
+               class="bg-red-dawn hover:bg-red-crimson text-text-primary font-roboto-condensed px-8 py-3 transition-colors duration-300 uppercase tracking-wider text-sm">
+                Вернуться на базу
+            </a>
+            <a href="{{ .Site.BaseURL }}/news" 
+               class="border border-red-dawn text-red-dawn hover:bg-red-dawn hover:text-text-primary font-roboto-condensed px-8 py-3 transition-all duration-300 uppercase tracking-wider text-sm">
+                Читать новости
+            </a>
+        </div>
+
+        <!-- Optional: Error code or additional info (easy to customize) -->
+        <div class="mt-12 text-gray-600 text-xs font-roboto-condensed uppercase tracking-widest">
+            <!-- Add custom message or code here -->
+        </div>
+    </div>
+
+    <!-- Decorative elements (customize as needed) -->
+    <div class="absolute top-10 left-10 w-32 h-32 border border-red-dawn/10 rotate-45 hidden md:block"></div>
+    <div class="absolute bottom-10 right-10 w-24 h-24 border border-red-dawn/10 rotate-12 hidden md:block"></div>
+</div>
+{{ end }}
