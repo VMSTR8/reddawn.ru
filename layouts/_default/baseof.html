@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }} - {{ .Site.Title }}</title>
+    <meta name="description" content="{{ .Site.Params.description }}">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind CSS custom theme configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'black-base': '#0D0D0D',
+                        'gunmetal-gray': '#2A2A2A',
+                        'charcoal-matte': '#3C3C3C',
+                        'red-dawn': '#B62828',
+                        'red-crimson': '#7A1E1E',
+                        'coyote-brown': '#8B6B3E',
+                        'ranger-tan': '#A67C52',
+                        'olive-drab': '#5B5B45',
+                        'text-primary': '#EAEAEA',
+                        'text-secondary': '#B0B0B0'
+                    },
+                    fontFamily: {
+                        'russo': ['Russo One', 'sans-serif'],
+                        'roboto-condensed': ['Roboto Condensed', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Stylesheets -->
+    <link rel="stylesheet" href="{{ "css/base.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/typography.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/components.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "css/animations.css" | relURL }}">
+</head>
+<body class="bg-black-base text-text-primary">
+    {{ block "main" . }}{{ end }}
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" 
+        class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-red-dawn hover:bg-red-dawn/80 text-white p-2.5 sm:p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 invisible hover:scale-110 z-50"
+        aria-label="Вернуться наверх">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+    
+    <!-- JavaScript Modules -->
+    <script src="{{ "js/scroll.js" | relURL }}"></script>
+    <script src="{{ "js/main.js" | relURL }}"></script>
+</body>
+</html>
