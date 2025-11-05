@@ -1,0 +1,59 @@
+/**
+ * Component Styles
+ * Reusable component styles for cards, buttons, and interactive elements
+ * 
+ * @author Maxim VMSTR8 Vinokurov
+ * @since 2025
+ */
+
+/* ==================== Intel Cards (Military Briefing Style) ==================== */
+.intel-card {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.intel-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 48%, rgba(182, 40, 40, 0.1) 49%, rgba(182, 40, 40, 0.1) 51%, transparent 52%);
+    background-size: 8px 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.intel-card:hover::before {
+    opacity: 1;
+}
+
+/* ==================== Loadout Cards ==================== */
+.loadout-card {
+    transform-style: preserve-3d;
+}
+
+.stat-bar {
+    animation: fillBar 1s ease-out forwards;
+    transform-origin: left;
+}
+
+.loadout-card:hover .targeting-reticle {
+    animation: rotate-reticle 4s linear infinite;
+}
+
+/* ==================== Radio Button Styles ==================== */
+input[type="radio"]:checked + .radio-box {
+    border-color: #B62828;
+    background-color: rgba(182, 40, 40, 0.1);
+}
+
+input[type="radio"]:checked + .radio-box .radio-label {
+    color: #B62828;
+}
+
+input[type="radio"]:checked + .radio-box .corner-accent {
+    opacity: 1;
+}
