@@ -1,0 +1,38 @@
+<!--
+    Footer Component
+    Site footer with branding, copyright, and social links
+    
+    @author Maxim VMSTR8 Vinokurov
+    @since 2025
+-->
+<footer id="site-footer" class="bg-black-base border-t border-charcoal-matte py-6 sm:py-8" style="min-height: 120px;">
+    <div class="container mx-auto px-4 sm:px-6">
+        <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+            <!-- Logo -->
+            <div class="text-xl sm:text-2xl font-russo text-red-dawn tracking-wider">
+                RED DAWN
+            </div>
+            
+            <!-- Center Block: Creator and Copyright -->
+            <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-xs sm:text-sm font-roboto-condensed text-text-secondary/60 tracking-wide text-center">
+                <div>
+                    by <a href="https://t.me/vmstr8" target="_blank" rel="noopener noreferrer" class="hover:text-red-dawn transition-all">Maxim VMSTR8 Vinokurov</a>
+                </div>
+                <div>
+                    © RED DAWN | 2014 — {{ now.Year }}
+                </div>
+            </div>
+            
+            <!-- Telegram Link - Единственная соцсеть -->
+            <a href="https://t.me/reddawnairsoft" target="_blank" rel="noopener noreferrer" 
+               class="group flex items-center gap-3 px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg bg-red-dawn/10 border border-red-dawn/30 hover:bg-red-dawn hover:border-red-dawn transition-all duration-300 hover:scale-105">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-dawn group-hover:text-black-base transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.73-.53.37-1.01.55-1.44.54-.47-.01-1.38-.27-2.05-.49-.83-.27-1.48-.42-1.42-.88.03-.24.37-.49 1-.74 3.91-1.7 6.52-2.82 7.83-3.37 3.73-1.55 4.51-1.82 5.01-1.83.11 0 .36.03.52.16.14.11.17.26.19.37.01.08.03.29.01.45z"/>
+                </svg>
+                <span class="text-sm sm:text-base font-roboto-condensed text-red-dawn group-hover:text-black-base transition-colors font-semibold tracking-wide">
+                    TELEGRAM
+                </span>
+            </a>
+        </div>
+    </div>
+</footer>
