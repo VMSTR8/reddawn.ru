@@ -1,0 +1,259 @@
+/**
+ * Animation Styles
+ * Keyframe animations and animated classes for interactive effects
+ * 
+ * @author Maxim VMSTR8 Vinokurov
+ * @since 2025
+ */
+
+/* ==================== Scan Line Animation ==================== */
+@keyframes scan {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.scan-line {
+    animation: scan 2s ease-in-out infinite;
+}
+
+/* ==================== Pulse Animations with Delays ==================== */
+@keyframes pulse-delay-75 {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes pulse-delay-150 {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.animate-pulse.delay-75 {
+    animation: pulse-delay-75 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation-delay: 0.075s;
+}
+
+.animate-pulse.delay-150 {
+    animation: pulse-delay-150 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation-delay: 0.15s;
+}
+
+/* ==================== Stat Bar Fill Animation ==================== */
+@keyframes fillBar {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* ==================== Targeting Reticle Rotation ==================== */
+@keyframes rotate-reticle {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ==================== Form Animations ==================== */
+@keyframes shake {
+    0%, 100% { 
+        transform: translateX(0); 
+    }
+    10%, 30%, 50%, 70%, 90% { 
+        transform: translateX(-8px); 
+    }
+    20%, 40%, 60%, 80% { 
+        transform: translateX(8px); 
+    }
+}
+
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes check-draw {
+    0% {
+        stroke-dasharray: 0, 100;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        stroke-dasharray: 100, 0;
+        opacity: 1;
+    }
+}
+
+@keyframes x-draw {
+    0% {
+        stroke-dasharray: 0, 100;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        stroke-dasharray: 100, 0;
+        opacity: 1;
+    }
+}
+
+.animate-shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.animate-slide-in {
+    animation: slide-in 0.5s ease-out;
+}
+
+.animate-check-draw {
+    stroke-dasharray: 100;
+    animation: check-draw 0.8s ease-out forwards;
+}
+
+.animate-x-draw {
+    stroke-dasharray: 100;
+    animation: x-draw 0.8s ease-out forwards;
+}
+
+/* ==================== Theme Toggle Animations ==================== */
+@keyframes toggleAttempt {
+    0% { 
+        transform: translateX(0); 
+    }
+    25% { 
+        transform: translateX(18px); 
+    }
+    50% { 
+        transform: translateX(18px); 
+    }
+    75% { 
+        transform: translateX(9px); 
+    }
+    100% { 
+        transform: translateX(0); 
+    }
+}
+
+@keyframes bgColorFlash {
+    0% { 
+        background-color: rgb(82, 82, 91); 
+    }
+    25% { 
+        background-color: rgb(100, 100, 110); 
+    }
+    50% { 
+        background-color: rgb(120, 120, 130); 
+    }
+    75% { 
+        background-color: rgb(100, 100, 110); 
+    }
+    100% { 
+        background-color: rgb(82, 82, 91); 
+    }
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+    }
+    to { 
+        opacity: 1; 
+    }
+}
+
+@keyframes fadeOut {
+    from { 
+        opacity: 1; 
+    }
+    to { 
+        opacity: 0; 
+    }
+}
+
+@keyframes slideInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ==================== Mission Failed Animations ==================== */
+@keyframes missionFailedSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(10px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.mission-failed-text {
+    text-shadow: 0 0 20px rgba(182, 40, 40, 0.8),
+                 0 0 40px rgba(182, 40, 40, 0.4);
+    animation: missionFailedPulse 2s ease-in-out infinite;
+}
+
+@keyframes missionFailedPulse {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 0 0 20px rgba(182, 40, 40, 0.8),
+                     0 0 40px rgba(182, 40, 40, 0.4);
+    }
+    50% {
+        opacity: 0.9;
+        text-shadow: 0 0 30px rgba(182, 40, 40, 1),
+                     0 0 60px rgba(182, 40, 40, 0.6);
+    }
+}
+
+.mission-failed-icon {
+    animation: missionFailedIcon 0.6s ease-out;
+}
+
+@keyframes missionFailedIcon {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.2) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
