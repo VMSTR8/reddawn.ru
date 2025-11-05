@@ -27,7 +27,7 @@ Built site will be in the `public/` folder
 ## Project Structure
 
 ```
-reddawn/
+reddawn.ru/
 ├── content/          # Site content (markdown files)
 │   └── news/        # News articles
 ├── layouts/         # HTML templates
