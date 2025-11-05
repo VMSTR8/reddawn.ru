@@ -1,0 +1,20 @@
+{
+  "name": "reddawn.ru",
+  "version": "1.0.0",
+  "description": "Red Dawn team website built with Hugo and hosted on GitHub Pages.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "hugo server -D",
+    "build": "hugo --gc --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.16",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.1.16"
+  }
+}
