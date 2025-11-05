@@ -1,0 +1,18 @@
+baseURL = 'https://username.github.io/reddawn/'
+languageCode = 'ru-ru'
+title = 'Red Dawn'
+disableKinds = ['taxonomy', 'term']
+
+[pagination]
+  pagerSize = 6
+
+[params]
+  description = 'Red Dawn - Тактическая команда'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+# Настройки для GitHub Pages
+publishDir = 'public'
