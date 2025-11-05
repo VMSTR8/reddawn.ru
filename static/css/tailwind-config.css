@@ -1,0 +1,39 @@
+/**
+ * Tailwind CSS Configuration
+ * Custom theme configuration for Red Dawn airsoft team website
+ * 
+ * This file contains the Tailwind config that should be loaded via CDN's config object.
+ * Include this in a script tag: <script>tailwind.config = { ... }</script>
+ * 
+ * @author Maxim VMSTR8 Vinokurov
+ * @since 2025
+ */
+
+/* 
+Place this configuration in a <script> tag in your HTML:
+
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'black-base': '#0D0D0D',
+                    'gunmetal-gray': '#2A2A2A',
+                    'charcoal-matte': '#3C3C3C',
+                    'red-dawn': '#B62828',
+                    'red-crimson': '#7A1E1E',
+                    'coyote-brown': '#8B6B3E',
+                    'ranger-tan': '#A67C52',
+                    'olive-drab': '#5B5B45',
+                    'text-primary': '#EAEAEA',
+                    'text-secondary': '#B0B0B0'
+                },
+                fontFamily: {
+                    'russo': ['Russo One', 'sans-serif'],
+                    'roboto-condensed': ['Roboto Condensed', 'sans-serif']
+                }
+            }
+        }
+    }
+</script>
+*/
