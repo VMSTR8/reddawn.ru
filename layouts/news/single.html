@@ -1,0 +1,101 @@
+{{ define "main" }}
+<div class="w-full min-h-screen bg-black-base">
+    {{ partial "header.html" . }}
+    
+    <main class="pt-20 sm:pt-24 pb-12 sm:pb-16">
+        <article class="container mx-auto px-4 sm:px-6 max-w-4xl">
+            <!-- Back Button -->
+            <div class="mb-6 sm:mb-8">
+                <a href="{{ .Site.BaseURL }}news/" 
+                   class="inline-flex items-center space-x-2 text-red-dawn hover:text-red-crimson font-roboto-condensed transition-colors text-sm sm:text-base">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span class="text-sm sm:text-base">Назад к новостям</span>
+                </a>
+            </div>
+            
+            <!-- Header -->
+            <header class="mb-8 sm:mb-12">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-russo text-text-primary mb-3 sm:mb-4 tracking-wide leading-tight">
+                    {{ .Title }}
+                </h1>
+                <div class="flex items-center space-x-4 text-text-secondary font-roboto-condensed text-sm sm:text-base">
+                    <time datetime="{{ .Date.Format "2006-01-02" }}">
+                        {{ .Date.Format "02.01.2006" }}
+                    </time>
+                </div>
+            </header>
+            
+            <!-- Featured Image -->
+            <div class="mb-8 sm:mb-12 rounded-lg overflow-hidden">
+                <img src="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=1200&h=600&fit=crop{{ end }}" 
+                     alt="{{ .Title }}" 
+                     class="w-full h-48 sm:h-64 md:h-96 object-cover">
+            </div>
+            
+            <!-- Content -->
+            <div class="prose prose-invert prose-lg max-w-none">
+                <div class="text-text-secondary font-roboto-condensed leading-relaxed space-y-4">
+                    {{ .Content }}
+                </div>
+            </div>
+        </article>
+    </main>
+    
+    {{ partial "footer.html" . }}
+</div>
+
+<style>
+    .prose h2 {
+        color: #EAEAEA;
+        font-family: 'Russo One', sans-serif;
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    .prose h3 {
+        color: #EAEAEA;
+        font-family: 'Russo One', sans-serif;
+        font-size: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+    }
+    @media (min-width: 640px) {
+        .prose h2 {
+            font-size: 2rem;
+        }
+        .prose h3 {
+            font-size: 1.5rem;
+        }
+    }
+    .prose p {
+        margin-bottom: 1rem;
+    }
+    .prose ul, .prose ol {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .prose li {
+        margin-bottom: 0.5rem;
+    }
+    .prose a {
+        color: #B62828;
+        text-decoration: underline;
+    }
+    .prose a:hover {
+        color: #7A1E1E;
+    }
+    .prose strong {
+        color: #EAEAEA;
+        font-weight: 700;
+    }
+    .prose code {
+        background-color: #2A2A2A;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+    }
+</style>
+{{ end }}
