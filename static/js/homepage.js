@@ -17,8 +17,6 @@ const Homepage = {
      * Initialize homepage functionality
      */
     init: function() {
-        console.log('[Homepage] Initializing...');
-        
         // Initialize all modules
         if (typeof MissionTimer !== 'undefined') {
             MissionTimer.init();
@@ -36,8 +34,6 @@ const Homepage = {
         // if (typeof FormHandler !== 'undefined') {
         //     FormHandler.init();
         // }
-        
-        console.log('[Homepage] Initialized successfully');
     }
 };
 
