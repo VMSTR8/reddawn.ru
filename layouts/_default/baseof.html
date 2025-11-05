@@ -12,33 +12,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Tailwind CSS custom theme configuration
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'black-base': '#0D0D0D',
-                        'gunmetal-gray': '#2A2A2A',
-                        'charcoal-matte': '#3C3C3C',
-                        'red-dawn': '#B62828',
-                        'red-crimson': '#7A1E1E',
-                        'coyote-brown': '#8B6B3E',
-                        'ranger-tan': '#A67C52',
-                        'olive-drab': '#5B5B45',
-                        'text-primary': '#EAEAEA',
-                        'text-secondary': '#B0B0B0'
-                    },
-                    fontFamily: {
-                        'russo': ['Russo One', 'sans-serif'],
-                        'roboto-condensed': ['Roboto Condensed', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind CSS via Hugo Pipes -->
+    {{ $css := resources.Get "css/main.css" }}
+    {{ $css = $css | css.PostCSS }}
+    {{ if hugo.IsProduction }}
+        {{ $css = $css | minify | fingerprint }}
+    {{ end }}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $css.Data.Integrity }}"{{ end }}>
     
     <!-- Custom Stylesheets -->
     <link rel="stylesheet" href="{{ "css/base.css" | relURL }}">
