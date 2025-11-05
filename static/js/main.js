@@ -19,8 +19,6 @@ const RedDawnApp = {
      * Initialize all modules
      */
     init: function() {
-        console.log('[Red Dawn] Initializing application...');
-        
         // Initialize modules if their functions exist
         if (typeof ScrollManager !== 'undefined') {
             ScrollManager.init();
@@ -41,8 +39,6 @@ const RedDawnApp = {
         if (typeof MissionTimer !== 'undefined') {
             MissionTimer.init();
         }
-        
-        console.log('[Red Dawn] Application initialized successfully');
     }
 };
 
