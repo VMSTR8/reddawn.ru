@@ -1,0 +1,63 @@
+/**
+ * Base Styles
+ * Core styling for Red Dawn website including scrollbar, grain effect, and smooth scrolling
+ * 
+ * @author Maxim VMSTR8 Vinokurov
+ * @since 2025
+ */
+
+/* ==================== Custom Scrollbar ==================== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0D0D0D;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #B62828;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7A1E1E;
+}
+
+/* ==================== Smooth Scroll ==================== */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ==================== Grain Effect ==================== */
+.bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* ==================== Radial Gradient Background ==================== */
+.bg-gradient-radial {
+    background: radial-gradient(circle at center, var(--tw-gradient-stops));
+}
+
+/* ==================== Line Clamp ==================== */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    /* Note: Standard 'line-clamp' property is not yet widely supported */
+}
+
+/* ==================== Grayscale Filter ==================== */
+.filter.grayscale {
+    filter: grayscale(100%);
+}
+
+.filter.grayscale-0 {
+    filter: grayscale(0%);
+}
+
+/* ==================== Mission Time Display ==================== */
+.mission-time {
+    font-variant-numeric: tabular-nums;
+}
