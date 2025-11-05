@@ -1,0 +1,919 @@
+{{/* Homepage Template - Main landing page with snap-scroll sections */}}
+{{ define "main" }}
+<div class="w-full min-h-screen bg-black-base">
+    {{ partial "header.html" . }}
+    
+    <main class="snap-y snap-mandatory h-screen overflow-y-scroll md:h-screen">
+        <!-- Hero Section -->
+        <section id="hero-section" class="relative min-h-screen w-full snap-start flex items-center justify-start overflow-hidden">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="{{ .Site.BaseURL }}/images/general/title.jpg" 
+                     alt="Страйкбольная команда" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/60"></div>
+                <div class="absolute inset-0 bg-grain opacity-20"></div>
+            </div>
+            
+            <!-- Content -->
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 md:px-12">
+                <div class="max-w-xl sm:max-w-2xl">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-russo text-text-primary mb-3 sm:mb-4 tracking-wide">
+                        Страйкбольная<br><span class="whitespace-nowrap">команда <span class="text-red-dawn">RED DAWN</span></span>
+                    </h1>
+                    <h2 class="text-base sm:text-lg md:text-xl lg:text-2xl font-roboto-condensed text-text-secondary mb-6 sm:mb-8 tracking-wide leading-relaxed">
+                        Стрелять шариками в людей - это весело. Забей изучать сайт, погнали сразу к нам. Жми на кнопку и заполняй форму! Ну или крути страницу вниз, там чуть побольше про нас узнаешь.
+                    </h2>
+                    <a href="#join" class="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-red-dawn hover:bg-red-crimson text-text-primary font-roboto-condensed text-base sm:text-lg rounded-full transition-colors tracking-wide">
+                        ПРИСОЕДИНИТЬСЯ
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center cursor-pointer" onclick="document.getElementById('about-section').scrollIntoView({ behavior: 'smooth' })">
+                <span class="text-text-secondary font-roboto-condensed text-xs sm:text-sm mb-2 tracking-wider">
+                    КРУТИ ВНИЗ
+                </span>
+                <svg class="text-text-secondary animate-bounce w-6 h-6 sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </div>
+        </section>
+        
+        <!-- About Section - Recruitment Requirements -->
+        <section id="about-section" class="relative min-h-screen w-full snap-start flex items-center justify-center pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&h=1080&fit=crop" 
+                     alt="Team background" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/80"></div>
+            </div>
+            
+            <!-- Tactical Grid Background -->
+            <div class="absolute inset-0 z-0 opacity-5">
+                <div class="absolute inset-0" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 49px, #B62828 49px, #B62828 50px), repeating-linear-gradient(90deg, transparent, transparent 49px, #B62828 49px, #B62828 50px);"></div>
+            </div>
+            
+            <!-- Content -->
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 max-w-5xl">
+                <!-- Header -->
+                <div class="text-center mb-8 sm:mb-12">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <div class="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-red-dawn"></div>
+                        <span class="text-red-dawn font-mono text-xs sm:text-sm tracking-widest uppercase">// Operator Selection</span>
+                        <div class="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-red-dawn"></div>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-russo text-text-primary mb-3 sm:mb-4 tracking-wide">
+                        ТРЕБОВАНИЯ К КАНДИДАТУ
+                    </h2>
+                    <p class="text-sm sm:text-base font-roboto-condensed text-text-secondary tracking-wide max-w-2xl mx-auto">
+                        Перед тем как отправить заявку, убедись что соответствуешь критериям отбора
+                    </p>
+                </div>
+                
+                <!-- Requirements Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
+                    <!-- Requirement 1: Age -->
+                    <div class="requirement-card group relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn/30 hover:border-red-dawn transition-all duration-300 overflow-hidden">
+                        <!-- Card Number -->
+                        <div class="absolute top-0 left-0 bg-red-dawn text-black-base font-mono text-xs px-3 py-1">
+                            REQ-01
+                        </div>
+                        
+                        <!-- Corner Accents -->
+                        <div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-red-dawn"></div>
+                        <div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-red-dawn"></div>
+                        
+                        <div class="p-5 sm:p-6 pt-10">
+                            <!-- Icon -->
+                            <div class="mb-4 flex items-center justify-between">
+                                <div class="text-4xl sm:text-5xl">🎂</div>
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="text-xs font-mono text-green-500">CRITICAL</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="text-lg sm:text-xl font-russo text-text-primary mb-2 tracking-wide group-hover:text-red-dawn transition-colors">
+                                ВОЗРАСТ
+                            </h3>
+                            
+                            <!-- Description -->
+                            <p class="text-sm font-roboto-condensed text-text-secondary leading-relaxed mb-3">
+                                Набор в команду строго от <span class="text-red-dawn font-bold">21 года</span>. Никаких исключений.
+                            </p>
+                            
+                            <!-- Status Bar -->
+                            <div class="flex items-center gap-2 text-xs font-mono text-text-secondary">
+                                <span>MINIMUM:</span>
+                                <span class="text-red-dawn">21+</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Requirement 2: Equipment Cost -->
+                    <div class="requirement-card group relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn/30 hover:border-red-dawn transition-all duration-300 overflow-hidden">
+                        <!-- Card Number -->
+                        <div class="absolute top-0 left-0 bg-red-dawn text-black-base font-mono text-xs px-3 py-1">
+                            REQ-02
+                        </div>
+                        
+                        <!-- Corner Accents -->
+                        <div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-red-dawn"></div>
+                        <div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-red-dawn"></div>
+                        
+                        <div class="p-5 sm:p-6 pt-10">
+                            <!-- Icon -->
+                            <div class="mb-4 flex items-center justify-between">
+                                <div class="text-4xl sm:text-5xl">💰</div>
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                                    <span class="text-xs font-mono text-yellow-500">IMPORTANT</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="text-lg sm:text-xl font-russo text-text-primary mb-2 tracking-wide group-hover:text-red-dawn transition-colors">
+                                СНАРЯЖЕНИЕ
+                            </h3>
+                            
+                            <!-- Description -->
+                            <p class="text-sm font-roboto-condensed text-text-secondary leading-relaxed mb-3">
+                                Полный комплект качественного снаряжения. Ориентировочная стоимость <span class="text-red-dawn font-bold">~100k₽</span>
+                            </p>
+                            
+                            <!-- Status Bar -->
+                            <div class="flex items-center gap-2 text-xs font-mono text-text-secondary">
+                                <span>BUDGET:</span>
+                                <span class="text-red-dawn">≈100 000₽</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Requirement 3: Activity -->
+                    <div class="requirement-card group relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn/30 hover:border-red-dawn transition-all duration-300 overflow-hidden">
+                        <!-- Card Number -->
+                        <div class="absolute top-0 left-0 bg-red-dawn text-black-base font-mono text-xs px-3 py-1">
+                            REQ-03
+                        </div>
+                        
+                        <!-- Corner Accents -->
+                        <div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-red-dawn"></div>
+                        <div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-red-dawn"></div>
+                        
+                        <div class="p-5 sm:p-6 pt-10">
+                            <!-- Icon -->
+                            <div class="mb-4 flex items-center justify-between">
+                                <div class="text-4xl sm:text-5xl">📅</div>
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="text-xs font-mono text-green-500">CRITICAL</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="text-lg sm:text-xl font-russo text-text-primary mb-2 tracking-wide group-hover:text-red-dawn transition-colors">
+                                АКТИВНОСТЬ
+                            </h3>
+                            
+                            <!-- Description -->
+                            <p class="text-sm font-roboto-condensed text-text-secondary leading-relaxed mb-3">
+                                Готовность выезжать на мероприятия <span class="text-red-dawn font-bold">минимум 1 раз в месяц</span>. Без отмазок.
+                            </p>
+                            
+                            <!-- Status Bar -->
+                            <div class="flex items-center gap-2 text-xs font-mono text-text-secondary">
+                                <span>FREQUENCY:</span>
+                                <span class="text-red-dawn">1+ / MONTH</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Requirement 4: Humor (Easter Egg) -->
+                    <div class="requirement-card group relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn/30 hover:border-red-dawn transition-all duration-300 overflow-hidden">
+                        <!-- Card Number -->
+                        <div class="absolute top-0 left-0 bg-red-dawn text-black-base font-mono text-xs px-3 py-1">
+                            REQ-04
+                        </div>
+                        
+                        <!-- Corner Accents -->
+                        <div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-red-dawn"></div>
+                        <div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-red-dawn"></div>
+                        
+                        <div class="p-5 sm:p-6 pt-10">
+                            <!-- Icon -->
+                            <div class="mb-4 flex items-center justify-between">
+                                <div class="text-4xl sm:text-5xl">💀</div>
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+                                    <span class="text-xs font-mono text-purple-500">SPECIAL</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="text-lg sm:text-xl font-russo text-text-primary mb-2 tracking-wide group-hover:text-red-dawn transition-colors">
+                                ЧУВСТВО ЮМОРА
+                            </h3>
+                            
+                            <!-- Description -->
+                            <p class="text-sm font-roboto-condensed text-text-secondary leading-relaxed mb-3">
+                                Умение в <span class="text-red-dawn font-bold">черный юмор</span>. Если обижаешься на шутки — это не к нам.
+                            </p>
+                            
+                            <!-- Status Bar -->
+                            <div class="flex items-center gap-2 text-xs font-mono text-text-secondary">
+                                <span>LEVEL:</span>
+                                <span class="text-red-dawn">DARK MODE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Notice -->
+                <div class="mt-8 sm:mt-12 max-w-3xl mx-auto">
+                    <div class="relative bg-black-base/50 border border-red-dawn/30 p-4 sm:p-6">
+                        <div class="absolute top-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                        <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                        <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                        <div class="absolute bottom-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                        
+                        <div class="flex items-start gap-3">
+                            <span class="text-red-dawn text-xl">⚠️</span>
+                            <div>
+                                <p class="text-sm sm:text-base font-roboto-condensed text-text-secondary leading-relaxed">
+                                    <span class="text-red-dawn font-bold">Red Dawn</span> — страйкбольная команда, коих черт знает сколько в Москве и Подмосковье. 
+                                    Как ты вообще нас нашел то? Но раз нашел — смотри внимательно. Катаемся на все виды игр, от воскресок до милсимов. 
+                                    Следим за тем, чтобы все выглядели красиво, стильно, модно — все же ради фоточек катаются на игры, да? 
+                                    Постоянно тренируемся, чтобы на игре не забыть как из привода стрелять вообще.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Equipment Section - Loadout Selection -->
+        <section id="equipment-section" class="relative min-h-screen w-full snap-start flex items-center justify-center bg-black-base pt-20 sm:pt-24 pb-16 md:py-24 overflow-hidden">
+            <!-- Hexagon Pattern Background -->
+            <div class="absolute inset-0 z-0 opacity-5">
+                <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="hexagons" width="50" height="43.4" patternUnits="userSpaceOnUse" patternTransform="scale(2)">
+                            <polygon points="24.8,22 37.3,29.2 37.3,43.7 24.8,50.9 12.3,43.7 12.3,29.2" fill="none" stroke="#B62828" stroke-width="0.5"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#hexagons)" />
+                </svg>
+            </div>
+            
+            <!-- Radial Gradient Overlay -->
+            <div class="absolute inset-0 z-0 bg-gradient-radial from-transparent via-black-base/50 to-black-base"></div>
+            
+            <!-- HUD Corner Elements -->
+            <div class="absolute top-6 left-6 w-20 h-20 border-t-4 border-l-4 border-red-dawn opacity-70 z-10">
+                <div class="absolute -top-1 -left-1 w-2 h-2 bg-red-dawn animate-pulse"></div>
+            </div>
+            <div class="absolute top-6 right-6 w-20 h-20 border-t-4 border-r-4 border-red-dawn opacity-70 z-10">
+                <div class="absolute -top-1 -right-1 w-2 h-2 bg-red-dawn animate-pulse"></div>
+            </div>
+            <div class="absolute bottom-6 left-6 w-20 h-20 border-b-4 border-l-4 border-red-dawn opacity-70 z-10">
+                <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-red-dawn animate-pulse"></div>
+            </div>
+            <div class="absolute bottom-6 right-6 w-20 h-20 border-b-4 border-r-4 border-red-dawn opacity-70 z-10">
+                <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-red-dawn animate-pulse"></div>
+            </div>
+            
+            <div class="container mx-auto px-4 sm:px-6 relative z-10">
+                <!-- Header -->
+                <div class="max-w-6xl mx-auto mb-8 sm:mb-12">
+                    <div class="text-center">
+                        <div class="flex items-center justify-center gap-3 mb-4">
+                            <div class="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-red-dawn"></div>
+                            <span class="text-red-dawn font-mono text-xs sm:text-sm tracking-widest uppercase">// LOADOUT SELECTION</span>
+                            <div class="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-red-dawn"></div>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-russo text-text-primary tracking-wide mb-3">
+                            ЛЯ КАКИЕ МЫ МОДНЫЕ
+                        </h2>
+                        <p class="text-sm sm:text-base font-roboto-condensed text-text-secondary tracking-wider uppercase">
+                            Аксиома Эскобара, кста
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Loadout Cards Grid -->
+                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
+                    {{/* Season availability logic: April-September = Summer, October-March = Winter */}}
+                    {{ $currentMonth := now.Month }}
+                    {{ $isSummerSeason := and (ge $currentMonth 4) (le $currentMonth 9) }}
+                    {{ $isWinterSeason := not $isSummerSeason }}
+                    
+                    <!-- Summer Loadout -->
+                    <a href="https://example.com/summer-kit" target="_blank" rel="noopener noreferrer" 
+                       class="loadout-card equipment-card opacity-0 translate-y-10 transition-all duration-700 ease-out group relative">
+                        <!-- Card Background -->
+                        <div class="relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn/30 hover:border-red-dawn transition-all duration-300 overflow-hidden">
+                            <!-- Diagonal Stripes -->
+                            <div class="absolute inset-0 opacity-5" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, #B62828 10px, #B62828 20px);"></div>
+                            
+                            <!-- Top Bar -->
+                            <div class="relative bg-red-dawn/20 border-b-2 border-red-dawn/50 px-4 sm:px-6 py-3 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    {{ if $isSummerSeason }}
+                                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    {{ else }}
+                                    <div class="w-3 h-3 bg-red-dawn rounded-full animate-pulse"></div>
+                                    {{ end }}
+                                    <span class="font-mono text-xs sm:text-sm text-text-primary tracking-wider">LOADOUT 01</span>
+                                </div>
+                                <div class="font-mono text-xs text-red-dawn tracking-wider">ЛЕТНИЙ СЕЗОН</div>
+                            </div>
+                            
+                            <!-- Content Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-6 p-4 sm:p-6 md:p-8">
+                                <!-- Left Side - Operator Image -->
+                                <div class="md:col-span-3 relative flex items-center justify-center">
+                                    <div class="relative w-full h-[450px] sm:h-[500px] md:h-[500px] flex items-center justify-center">
+                                        <!-- Targeting Reticle -->
+                                        <div class="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none">
+                                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                <div class="w-32 h-32 border-2 border-red-dawn rounded-full"></div>
+                                                <div class="absolute top-0 left-1/2 w-px h-6 bg-red-dawn transform -translate-x-1/2 -translate-y-6"></div>
+                                                <div class="absolute bottom-0 left-1/2 w-px h-6 bg-red-dawn transform -translate-x-1/2 translate-y-6"></div>
+                                                <div class="absolute left-0 top-1/2 h-px w-6 bg-red-dawn transform -translate-y-1/2 -translate-x-6"></div>
+                                                <div class="absolute right-0 top-1/2 h-px w-6 bg-red-dawn transform -translate-y-1/2 translate-x-6"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <img src="{{ .Site.BaseURL }}/images/equipment/summer-kit.png" 
+                                             alt="Летний кит" 
+                                             class="relative z-10 w-auto h-full max-w-full object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                                        
+                                        <!-- Glow Effect -->
+                                        <div class="absolute inset-0 bg-gradient-to-t from-red-dawn/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Right Side - Stats & Info -->
+                                <div class="md:col-span-2 flex flex-col justify-center space-y-3 sm:space-y-4">
+                                    <!-- Title -->
+                                    <div class="border-l-4 border-red-dawn pl-4">
+                                        <h3 class="text-2xl sm:text-3xl font-russo text-text-primary tracking-wide mb-1 group-hover:text-red-dawn transition-colors">
+                                            ЛЕТНИЙ КИТ
+                                        </h3>
+                                        <p class="text-xs font-mono text-text-secondary tracking-wider">SEASON: SUMMER</p>
+                                    </div>
+                                    
+                                    <!-- Stats Bars -->
+                                    <div class="space-y-3">
+                                        <!-- Mobility -->
+                                        <div>
+                                            <div class="flex justify-between items-center mb-1">
+                                                <span class="text-xs font-mono text-text-secondary tracking-wider">MOBILITY</span>
+                                                <span class="text-xs font-mono text-red-dawn">95%</span>
+                                            </div>
+                                            <div class="h-1.5 bg-black-base/50 rounded-full overflow-hidden">
+                                                <div class="h-full bg-gradient-to-r from-red-dawn to-red-crimson stat-bar" style="width: 95%"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Protection -->
+                                        <div>
+                                            <div class="flex justify-between items-center mb-1">
+                                                <span class="text-xs font-mono text-text-secondary tracking-wider">PROTECTION</span>
+                                                <span class="text-xs font-mono text-red-dawn">75%</span>
+                                            </div>
+                                            <div class="h-1.5 bg-black-base/50 rounded-full overflow-hidden">
+                                                <div class="h-full bg-gradient-to-r from-red-dawn to-red-crimson stat-bar" style="width: 75%"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Endurance -->
+                                        <div>
+                                            <div class="flex justify-between items-center mb-1">
+                                                <span class="text-xs font-mono text-text-secondary tracking-wider">ENDURANCE</span>
+                                                <span class="text-xs font-mono text-red-dawn">85%</span>
+                                            </div>
+                                            <div class="h-1.5 bg-black-base/50 rounded-full overflow-hidden">
+                                                <div class="h-full bg-gradient-to-r from-red-dawn to-red-crimson stat-bar" style="width: 85%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tags -->
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-red-dawn/20 border border-red-dawn/50 text-xs font-mono text-text-primary tracking-wider">ЛЕГКИЙ</span>
+                                        <span class="px-2 py-1 bg-red-dawn/20 border border-red-dawn/50 text-xs font-mono text-text-primary tracking-wider">БЫСТРЫЙ</span>
+                                    </div>
+                                    
+                                    <!-- Action Button -->
+                                    <div class="pt-2">
+                                        <div class="flex items-center justify-between px-4 py-2 bg-red-dawn/10 border border-red-dawn/50 group-hover:bg-red-dawn/20 transition-colors">
+                                            <span class="text-xs font-mono text-text-primary tracking-wider">СМОТРЕТЬ ДЕТАЛИ</span>
+                                            <svg class="w-4 h-4 text-red-dawn transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Bottom Status -->
+                            <div class="relative bg-black-base/30 border-t border-red-dawn/30 px-4 sm:px-6 py-2">
+                                <div class="flex items-center justify-between text-xs font-mono text-text-secondary">
+                                    <span>TEMPERATURE: 15°C - 30°C</span>
+                                    {{ if $isSummerSeason }}
+                                    <span class="text-green-500">● AVAILABLE</span>
+                                    {{ else }}
+                                    <span class="text-red-dawn">● NOT AVAILABLE</span>
+                                    {{ end }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Winter Loadout -->
+                    <a href="https://example.com/winter-kit" target="_blank" rel="noopener noreferrer" 
+                       class="loadout-card equipment-card opacity-0 translate-y-10 transition-all duration-700 ease-out delay-200 group relative">
+                        <!-- Card Background -->
+                        <div class="relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn/30 hover:border-red-dawn transition-all duration-300 overflow-hidden">
+                            <!-- Diagonal Stripes -->
+                            <div class="absolute inset-0 opacity-5" style="background: repeating-linear-gradient(-45deg, transparent, transparent 10px, #B62828 10px, #B62828 20px);"></div>
+                            
+                            <!-- Top Bar -->
+                            <div class="relative bg-red-dawn/20 border-b-2 border-red-dawn/50 px-4 sm:px-6 py-3 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    {{ if $isWinterSeason }}
+                                    <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    {{ else }}
+                                    <div class="w-3 h-3 bg-red-dawn rounded-full animate-pulse"></div>
+                                    {{ end }}
+                                    <span class="font-mono text-xs sm:text-sm text-text-primary tracking-wider">LOADOUT 02</span>
+                                </div>
+                                <div class="font-mono text-xs text-red-dawn tracking-wider">ЗИМНИЙ СЕЗОН</div>
+                            </div>
+                            
+                            <!-- Content Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-6 p-4 sm:p-6 md:p-8">
+                                <!-- Left Side - Operator Image -->
+                                <div class="md:col-span-3 relative flex items-center justify-center">
+                                    <div class="relative w-full h-[450px] sm:h-[500px] md:h-[500px] flex items-center justify-center">
+                                        <!-- Targeting Reticle -->
+                                        <div class="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none">
+                                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                                <div class="w-32 h-32 border-2 border-red-dawn rounded-full"></div>
+                                                <div class="absolute top-0 left-1/2 w-px h-6 bg-red-dawn transform -translate-x-1/2 -translate-y-6"></div>
+                                                <div class="absolute bottom-0 left-1/2 w-px h-6 bg-red-dawn transform -translate-x-1/2 translate-y-6"></div>
+                                                <div class="absolute left-0 top-1/2 h-px w-6 bg-red-dawn transform -translate-y-1/2 -translate-x-6"></div>
+                                                <div class="absolute right-0 top-1/2 h-px w-6 bg-red-dawn transform -translate-y-1/2 translate-x-6"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <img src="{{ .Site.BaseURL }}/images/equipment/winter-kit.png" 
+                                             alt="Зимний кит" 
+                                             class="relative z-10 w-auto h-full max-w-full object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                                        
+                                        <!-- Glow Effect -->
+                                        <div class="absolute inset-0 bg-gradient-to-t from-red-dawn/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Right Side - Stats & Info -->
+                                <div class="md:col-span-2 flex flex-col justify-center space-y-3 sm:space-y-4">
+                                    <!-- Title -->
+                                    <div class="border-l-4 border-red-dawn pl-4">
+                                        <h3 class="text-2xl sm:text-3xl font-russo text-text-primary tracking-wide mb-1 group-hover:text-red-dawn transition-colors">
+                                            ЗИМНИЙ КИТ
+                                        </h3>
+                                        <p class="text-xs font-mono text-text-secondary tracking-wider">SEASON: WINTER</p>
+                                    </div>
+                                    
+                                    <!-- Stats Bars -->
+                                    <div class="space-y-3">
+                                        <!-- Mobility -->
+                                        <div>
+                                            <div class="flex justify-between items-center mb-1">
+                                                <span class="text-xs font-mono text-text-secondary tracking-wider">MOBILITY</span>
+                                                <span class="text-xs font-mono text-red-dawn">70%</span>
+                                            </div>
+                                            <div class="h-1.5 bg-black-base/50 rounded-full overflow-hidden">
+                                                <div class="h-full bg-gradient-to-r from-red-dawn to-red-crimson stat-bar" style="width: 70%"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Protection -->
+                                        <div>
+                                            <div class="flex justify-between items-center mb-1">
+                                                <span class="text-xs font-mono text-text-secondary tracking-wider">PROTECTION</span>
+                                                <span class="text-xs font-mono text-red-dawn">95%</span>
+                                            </div>
+                                            <div class="h-1.5 bg-black-base/50 rounded-full overflow-hidden">
+                                                <div class="h-full bg-gradient-to-r from-red-dawn to-red-crimson stat-bar" style="width: 95%"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Endurance -->
+                                        <div>
+                                            <div class="flex justify-between items-center mb-1">
+                                                <span class="text-xs font-mono text-text-secondary tracking-wider">ENDURANCE</span>
+                                                <span class="text-xs font-mono text-red-dawn">80%</span>
+                                            </div>
+                                            <div class="h-1.5 bg-black-base/50 rounded-full overflow-hidden">
+                                                <div class="h-full bg-gradient-to-r from-red-dawn to-red-crimson stat-bar" style="width: 80%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tags -->
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-red-dawn/20 border border-red-dawn/50 text-xs font-mono text-text-primary tracking-wider">ТЯЖЕЛЫЙ</span>
+                                        <span class="px-2 py-1 bg-red-dawn/20 border border-red-dawn/50 text-xs font-mono text-text-primary tracking-wider">ЗАЩИЩЕННЫЙ</span>
+                                    </div>
+                                    
+                                    <!-- Action Button -->
+                                    <div class="pt-2">
+                                        <div class="flex items-center justify-between px-4 py-2 bg-red-dawn/10 border border-red-dawn/50 group-hover:bg-red-dawn/20 transition-colors">
+                                            <span class="text-xs font-mono text-text-primary tracking-wider">СМОТРЕТЬ ДЕТАЛИ</span>
+                                            <svg class="w-4 h-4 text-red-dawn transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Bottom Status -->
+                            <div class="relative bg-black-base/30 border-t border-red-dawn/30 px-4 sm:px-6 py-2">
+                                <div class="flex items-center justify-between text-xs font-mono text-text-secondary">
+                                    <span>TEMPERATURE: -15°C - 10°C</span>
+                                    {{ if $isWinterSeason }}
+                                    <span class="text-green-500">● AVAILABLE</span>
+                                    {{ else }}
+                                    <span class="text-red-dawn">● NOT AVAILABLE</span>
+                                    {{ end }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Training Section - Military Briefing Style -->
+        <section class="relative min-h-screen w-full snap-start flex items-center justify-center bg-black-base pt-20 sm:pt-24 pb-16 md:py-24 overflow-hidden">
+            <!-- Tactical Grid Background -->
+            <div class="absolute inset-0 z-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 49px, #B62828 49px, #B62828 50px), repeating-linear-gradient(90deg, transparent, transparent 49px, #B62828 49px, #B62828 50px);"></div>
+            </div>
+            
+            <!-- Scanline Effect -->
+            <div class="absolute inset-0 z-0 opacity-5 pointer-events-none" style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, #EAEAEA 2px, #EAEAEA 4px);"></div>
+            
+            <!-- Corner Brackets -->
+            <div class="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-red-dawn opacity-50 z-10"></div>
+            <div class="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-red-dawn opacity-50 z-10"></div>
+            <div class="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-red-dawn opacity-50 z-10"></div>
+            <div class="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-red-dawn opacity-50 z-10"></div>
+            
+            <div class="container mx-auto px-4 sm:px-6 relative z-10">
+                <!-- Mission Header -->
+                <div class="max-w-6xl mx-auto mb-8 sm:mb-12">
+                    <div class="border-l-4 border-red-dawn pl-4 sm:pl-6 mb-4 sm:mb-6">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-red-dawn font-roboto-condensed text-xs sm:text-sm tracking-widest uppercase">// INTELLIGENCE BRIEFING</span>
+                            <span class="text-red-dawn font-mono text-xs animate-pulse">●</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-russo text-text-primary tracking-wide">
+                            НАША ДВИЖУХА
+                        </h2>
+                        <div class="flex items-center gap-4 mt-2 text-xs sm:text-sm font-mono text-text-secondary">
+                            <span>SECTOR: MOSCOW</span>
+                            <span>|</span>
+                            <span class="mission-time">TIME: --:--</span>
+                            <span>|</span>
+                            <span>STATUS: ACTIVE</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Mission Description -->
+                    <div class="bg-gunmetal-gray/30 backdrop-blur-sm border border-red-dawn/30 p-4 sm:p-6 relative">
+                        <div class="absolute top-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                        <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                        <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                        <div class="absolute bottom-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                        
+                        <p class="text-sm sm:text-base md:text-lg font-roboto-condensed text-text-secondary leading-relaxed">
+                            Ну! Почти дошел до формы, чтобы заявку отправить! Чего остановился то? 
+                            Но раз уж ты тут, смотри, вот тебе наши актуальные новости. Зайди, почитай, посмотри 
+                            что мы за кенты такие. Вдруг ты передумаешь <span class="text-red-dawn">(правильно сделаешь)</span> к таким вступать?
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Intel Cards / News Grid -->
+                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                    {{ range $index, $element := first 3 (where .Site.RegularPages "Section" "news") }}
+                    <a href="{{ .RelPermalink }}" class="intel-card group relative bg-gunmetal-gray/50 backdrop-blur-sm border border-red-dawn/20 hover:border-red-dawn/60 transition-all duration-300 overflow-hidden">
+                        <!-- Card Number -->
+                        <div class="absolute top-0 left-0 bg-red-dawn text-black-base font-mono text-xs px-2 py-1 z-10">
+                            FILE {{ add $index 1 }}/3
+                        </div>
+                        
+                        <!-- Status Indicator -->
+                        <div class="absolute top-2 right-2 flex items-center gap-1 z-10">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            <span class="text-green-500 font-mono text-xs">VERIFIED</span>
+                        </div>
+                        
+                        <!-- Image Section -->
+                        <div class="relative h-40 sm:h-48 overflow-hidden">
+                            <img src="{{ if .Params.image }}{{ $.Site.BaseURL }}{{ .Params.image }}{{ else }}https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&h=600&fit=crop{{ end }}" 
+                                 alt="{{ .Title }}" 
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0">
+                            
+                            <!-- Scan Effect on Hover -->
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-red-dawn/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none scan-line"></div>
+                            
+                            <!-- Image Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        </div>
+                        
+                        <!-- Content Section -->
+                        <div class="p-4 sm:p-5 relative">
+                            <!-- Date & Classification -->
+                            <div class="flex items-center justify-between mb-2 text-xs font-mono text-text-secondary">
+                                <span>{{ .Date.Format "02.01.2006" }}</span>
+                                <span class="text-red-dawn">CLASSIFIED</span>
+                            </div>
+                            
+                            <!-- Title -->
+                            <h3 class="text-base sm:text-lg font-russo text-text-primary tracking-wide mb-3 line-clamp-2 group-hover:text-red-dawn transition-colors">
+                                {{ .Title }}
+                            </h3>
+                            
+                            <!-- Action Line -->
+                            <div class="flex items-center justify-between pt-3 border-t border-red-dawn/30">
+                                <span class="text-xs font-roboto-condensed text-text-secondary tracking-wider">ОТКРЫТЬ ДОСЬЕ</span>
+                                <svg class="w-4 h-4 text-red-dawn transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                            
+                            <!-- Corner Accents -->
+                            <div class="absolute bottom-0 left-0 w-0 h-0 border-l-8 border-b-8 border-l-transparent border-b-red-dawn/20 group-hover:border-b-red-dawn/60 transition-colors"></div>
+                            <div class="absolute top-0 right-0 w-0 h-0 border-r-8 border-t-8 border-r-transparent border-t-red-dawn/20 group-hover:border-t-red-dawn/60 transition-colors"></div>
+                        </div>
+                    </a>
+                    {{ end }}
+                </div>
+                
+                <!-- Bottom Status Bar -->
+                <div class="max-w-6xl mx-auto mt-8 sm:mt-12 border-t border-red-dawn/30 pt-4">
+                    <div class="flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-text-secondary">
+                        <div class="flex items-center gap-4">
+                            <span>ENCRYPTION: <span class="text-green-500">AES-256</span></span>
+                            <span class="hidden sm:inline">|</span>
+                            <span class="hidden sm:inline">CLEARANCE: <span class="text-red-dawn">TOP SECRET</span></span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span>ПЕРЕДАЧА ДАННЫХ</span>
+                            <div class="flex gap-1">
+                                <span class="w-1 h-3 bg-red-dawn animate-pulse"></span>
+                                <span class="w-1 h-3 bg-red-dawn animate-pulse delay-75"></span>
+                                <span class="w-1 h-3 bg-red-dawn animate-pulse delay-150"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Join Section -->
+        <section id="join" class="relative min-h-screen w-full snap-start flex flex-col">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1509233725247-49e657c54213?w=1920&h=1080&fit=crop" 
+                     alt="Dawn background" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/75"></div>
+            </div>
+            
+            <!-- Content -->
+            <div class="relative z-10 flex-1 flex flex-col">
+                <div class="flex-1 container mx-auto px-4 sm:px-6 max-w-2xl pt-20 sm:pt-24 pb-8 sm:pb-10 md:pt-20">
+                    <div class="text-center mb-6 sm:mb-8">
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-russo text-text-primary mb-3 sm:mb-4 tracking-wide">
+                            Ну что, го в Red Dawn?
+                        </h2>
+                        <p class="text-base sm:text-lg font-roboto-condensed text-text-secondary tracking-wide">
+                            Заполни форму, и мы свяжемся.
+                        </p>
+                    </div>
+                    
+                    <div id="form-success" class="relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-green-500 p-6 sm:p-8 text-center mb-6 sm:mb-8 md:mb-10 hidden overflow-hidden animate-slide-in">
+                        <!-- Success Corner Accents -->
+                        <div class="absolute top-0 left-0 w-3 h-3 bg-green-500 animate-pulse"></div>
+                        <div class="absolute top-0 right-0 w-3 h-3 bg-green-500 animate-pulse"></div>
+                        <div class="absolute bottom-0 left-0 w-3 h-3 bg-green-500 animate-pulse"></div>
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 animate-pulse"></div>
+                        
+                        <!-- Success Icon -->
+                        <div class="mb-4 flex justify-center">
+                            <div class="relative">
+                                <svg class="w-16 h-16 text-green-500 animate-check-draw" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <div class="absolute inset-0 bg-green-500/20 blur-xl"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-center gap-2 mb-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-xs font-mono text-green-500 tracking-widest">STATUS: APPROVED</span>
+                        </div>
+                        <p class="text-lg sm:text-xl font-russo text-green-500 tracking-wide mb-2">
+                            ЗАЯВКА ПРИНЯТА
+                        </p>
+                        <p class="text-sm font-mono text-text-secondary">
+                            Ожидай связи от оператора
+                        </p>
+                    </div>
+                    
+                    <div id="form-error" class="relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn p-6 sm:p-8 text-center mb-6 sm:mb-8 md:mb-10 hidden overflow-hidden animate-shake">
+                        <!-- Error Corner Accents -->
+                        <div class="absolute top-0 left-0 w-3 h-3 bg-red-dawn animate-pulse"></div>
+                        <div class="absolute top-0 right-0 w-3 h-3 bg-red-dawn animate-pulse"></div>
+                        <div class="absolute bottom-0 left-0 w-3 h-3 bg-red-dawn animate-pulse"></div>
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-red-dawn animate-pulse"></div>
+                        
+                        <!-- Error Icon -->
+                        <div class="mb-4 flex justify-center">
+                            <div class="relative">
+                                <svg class="w-16 h-16 text-red-dawn animate-x-draw" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                <div class="absolute inset-0 bg-red-dawn/20 blur-xl"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-center gap-2 mb-2">
+                            <div class="w-3 h-3 bg-red-dawn rounded-full animate-pulse"></div>
+                            <span class="text-xs font-mono text-red-dawn tracking-widest">STATUS: ERROR</span>
+                        </div>
+                        <p class="text-lg sm:text-xl font-russo text-red-dawn tracking-wide mb-2">
+                            ОШИБКА ОТПРАВКИ
+                        </p>
+                        <p class="text-sm font-mono text-text-secondary" id="error-message">
+                            Проблема с соединением. Попробуй позже.
+                        </p>
+                    </div>
+                    
+                    <form id="join-form" class="relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn/30 overflow-hidden mb-6 sm:mb-8 md:mb-10">
+                        <!-- Diagonal Pattern -->
+                        <div class="absolute inset-0 opacity-5 pointer-events-none" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, #B62828 10px, #B62828 20px);"></div>
+                        
+                        <!-- Top Header Bar -->
+                        <div class="relative bg-red-dawn/20 border-b-2 border-red-dawn/50 px-4 sm:px-6 py-3 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                <span class="font-mono text-xs sm:text-sm text-text-primary tracking-wider uppercase">// Operator Registration</span>
+                            </div>
+                            <span class="font-mono text-xs text-red-dawn tracking-wider">REQUIRED</span>
+                        </div>
+                        
+                        <!-- Form Content -->
+                        <div class="relative p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5">
+                            <!-- Name Field -->
+                            <div class="relative">
+                                <label class="flex items-center gap-2 text-text-primary font-mono text-xs sm:text-sm mb-2 tracking-wider uppercase">
+                                    <span class="text-red-dawn">▸</span> Позывной / Имя
+                                </label>
+                                <div class="relative">
+                                    <input type="text" name="name" required
+                                           class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-black-base/50 text-text-primary border-2 border-red-dawn/30 focus:border-red-dawn outline-none transition-all text-sm sm:text-base font-roboto-condensed tracking-wide">
+                                    <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                                    <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                                </div>
+                                <div class="error-message text-red-dawn text-xs font-mono mt-1.5 ml-1 hidden"></div>
+                            </div>
+                            
+                            <!-- Age Field -->
+                            <div class="relative">
+                                <label class="flex items-center gap-2 text-text-primary font-mono text-xs sm:text-sm mb-2 tracking-wider uppercase">
+                                    <span class="text-red-dawn">▸</span> Возраст
+                                </label>
+                                <div class="relative">
+                                    <input type="number" name="age" required
+                                           class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-black-base/50 text-text-primary border-2 border-red-dawn/30 focus:border-red-dawn outline-none transition-all text-sm sm:text-base font-roboto-condensed tracking-wide">
+                                    <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                                    <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs font-mono text-text-secondary">
+                                        ЛЕТ
+                                    </div>
+                                </div>
+                                <div class="error-message text-red-dawn text-xs font-mono mt-1.5 ml-1 hidden"></div>
+                            </div>
+                            
+                            <!-- Telegram Field -->
+                            <div class="relative">
+                                <label class="flex items-center gap-2 text-text-primary font-mono text-xs sm:text-sm mb-2 tracking-wider uppercase">
+                                    <span class="text-red-dawn">▸</span> Telegram
+                                </label>
+                                <div class="relative">
+                                    <input type="text" name="telegram" required placeholder="@username"
+                                           class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-black-base/50 text-text-primary border-2 border-red-dawn/30 focus:border-red-dawn outline-none transition-all text-sm sm:text-base font-roboto-condensed tracking-wide placeholder:text-text-secondary/30">
+                                    <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                                    <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                                </div>
+                                <div class="error-message text-red-dawn text-xs font-mono mt-1.5 ml-1 hidden"></div>
+                            </div>
+                            
+                            <!-- Experience Field -->
+                            <div class="relative">
+                                <label class="flex items-center gap-2 text-text-primary font-mono text-xs sm:text-sm mb-3 tracking-wider uppercase">
+                                    <span class="text-red-dawn">▸</span> Опыт в страйкболе
+                                </label>
+                                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                                    <label class="relative cursor-pointer group">
+                                        <input type="radio" name="experience" value="yes" class="absolute opacity-0">
+                                        <div class="radio-box relative bg-black-base/50 border-2 border-red-dawn/30 transition-all p-3 sm:p-4 text-center">
+                                            <div class="corner-accent absolute top-0 left-0 w-2 h-2 bg-red-dawn opacity-0 transition-opacity"></div>
+                                            <div class="corner-accent absolute bottom-0 right-0 w-2 h-2 bg-red-dawn opacity-0 transition-opacity"></div>
+                                            <div class="radio-label font-mono text-xs sm:text-sm text-text-primary tracking-wider transition-colors">ИГРАЛ</div>
+                                            <div class="mt-1 text-xs font-mono text-text-secondary">VETERAN</div>
+                                        </div>
+                                    </label>
+                                    <label class="relative cursor-pointer group">
+                                        <input type="radio" name="experience" value="no" checked class="absolute opacity-0">
+                                        <div class="radio-box relative bg-black-base/50 border-2 border-red-dawn/30 transition-all p-3 sm:p-4 text-center">
+                                            <div class="corner-accent absolute top-0 left-0 w-2 h-2 bg-red-dawn opacity-0 transition-opacity"></div>
+                                            <div class="corner-accent absolute bottom-0 right-0 w-2 h-2 bg-red-dawn opacity-0 transition-opacity"></div>
+                                            <div class="radio-label font-mono text-xs sm:text-sm text-text-primary tracking-wider transition-colors">НЕ ИГРАЛ</div>
+                                            <div class="mt-1 text-xs font-mono text-text-secondary">RECRUIT</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="pt-2 sm:pt-4">
+                                <button type="submit" 
+                                        class="relative w-full group overflow-hidden">
+                                    <div class="relative bg-red-dawn hover:bg-red-crimson border-2 border-red-dawn transition-all px-6 py-3 sm:px-8 sm:py-4">
+                                        <!-- Button Corners -->
+                                        <div class="absolute top-0 left-0 w-3 h-3 bg-black-base"></div>
+                                        <div class="absolute top-0 right-0 w-3 h-3 bg-black-base"></div>
+                                        <div class="absolute bottom-0 left-0 w-3 h-3 bg-black-base"></div>
+                                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-black-base"></div>
+                                        
+                                        <div class="flex items-center justify-center gap-3">
+                                            <span class="font-russo text-text-primary text-base sm:text-lg tracking-wider uppercase">ОТПРАВИТЬ ЗАЯВКУ</span>
+                                            <svg class="w-5 h-5 text-text-primary transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Bottom Status Bar -->
+                        <div class="relative bg-black-base/30 border-t-2 border-red-dawn/30 px-4 sm:px-6 py-2 flex items-center justify-between text-xs font-mono text-text-secondary">
+                            <div class="flex items-center gap-2">
+                                <span>ENCRYPTION: ACTIVE</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span>PROTECTED BY reCAPTCHA</span>
+                                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- reCAPTCHA Badge Notice -->
+                    <div class="text-center mt-4">
+                        <p class="text-xs font-mono text-text-secondary/50">
+                            Эта форма защищена Google reCAPTCHA. 
+                            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="text-red-dawn hover:text-red-crimson underline">Privacy</a> · 
+                            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" class="text-red-dawn hover:text-red-crimson underline">Terms</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                {{ partial "footer.html" . }}
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- JavaScript Modules for Homepage -->
+<script src="{{ "js/stats.js" | relURL }}"></script>
+<script src="{{ "js/equipment.js" | relURL }}"></script>
+<script src="{{ "js/form.js" | relURL }}"></script>
+<script src="{{ "js/timer.js" | relURL }}"></script>
+<script src="{{ "js/homepage.js" | relURL }}"></script>
+{{ end }}
