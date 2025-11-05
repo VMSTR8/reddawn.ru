@@ -895,11 +895,14 @@
                     
                     <!-- reCAPTCHA Badge Notice -->
                     <div class="text-center mt-4">
-                        <p class="text-xs font-mono text-text-secondary/50">
-                            Эта форма защищена Google reCAPTCHA. 
-                            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="text-red-dawn hover:text-red-crimson underline">Privacy</a> · 
-                            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" class="text-red-dawn hover:text-red-crimson underline">Terms</a>
-                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-0 sm:gap-1 text-xs font-mono text-text-secondary/50">
+                            <span>Эта форма защищена Google reCAPTCHA.</span>
+                            <div class="flex flex-row gap-1 mt-1 sm:mt-0">
+                                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="text-red-dawn hover:text-red-crimson underline">Privacy</a>
+                                <span>·</span>
+                                <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" class="text-red-dawn hover:text-red-crimson underline">Terms</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
