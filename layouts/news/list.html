@@ -1,0 +1,255 @@
+{{ define "main" }}
+{{ $allNews := where .Site.RegularPages "Section" "news" }}
+{{ $hasAnyNews := gt (len $allNews) 0 }}
+{{ $validPage := and (le .Paginator.PageNumber .Paginator.TotalPages) (gt .Paginator.PageNumber 0) }}
+
+{{ if and (not $hasAnyNews) (eq .Paginator.PageNumber 1) }}
+<!-- Нет новостей вообще - показываем красивую заглушку -->
+<div class="w-full min-h-screen bg-black-base flex flex-col">
+    {{ partial "header.html" . }}
+    
+    <main class="flex-1 pt-20 sm:pt-24 pb-16">
+        <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-russo text-text-primary mb-8 sm:mb-12 tracking-wide text-center">
+                БАЗАРИМ / НОВОСТИ
+            </h1>
+            
+            <!-- Tactical Empty State -->
+            <div class="max-w-3xl mx-auto">
+                <div class="relative bg-gradient-to-br from-gunmetal-gray/80 to-gunmetal-gray/40 backdrop-blur-sm border-2 border-red-dawn/30 overflow-hidden">
+                    <!-- Diagonal Stripes -->
+                    <div class="absolute inset-0 opacity-5" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, #B62828 10px, #B62828 20px);"></div>
+                    
+                    <!-- Corner Accents -->
+                    <div class="absolute top-0 left-0 w-3 h-3 bg-red-dawn"></div>
+                    <div class="absolute top-0 right-0 w-3 h-3 bg-red-dawn"></div>
+                    <div class="absolute bottom-0 left-0 w-3 h-3 bg-red-dawn"></div>
+                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-red-dawn"></div>
+                    
+                    <!-- Content -->
+                    <div class="relative p-8 sm:p-12 text-center">
+                        <!-- Icon -->
+                        <div class="mb-6">
+                            <div class="relative inline-block">
+                                <svg class="w-20 h-20 sm:w-24 sm:h-24 mx-auto text-red-dawn" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <div class="absolute inset-0 bg-red-dawn/20 blur-2xl -z-10"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Status -->
+                        <div class="flex items-center justify-center gap-2 mb-4">
+                            <div class="w-2 h-2 bg-text-secondary rounded-full"></div>
+                            <span class="text-xs font-mono text-text-secondary tracking-widest uppercase">STATUS: EMPTY</span>
+                        </div>
+                        
+                        <!-- Title -->
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-russo text-text-primary mb-4 tracking-wide">
+                            НОВОСТЕЙ ЕЩЁ НЕТ
+                        </h2>
+                        
+                        <!-- Description -->
+                        <p class="text-base sm:text-lg font-roboto-condensed text-text-secondary mb-6 leading-relaxed">
+                            База данных пуста. Контент в разработке.
+                            <br class="hidden sm:block">
+                            Следите за обновлениями.
+                        </p>
+                        
+                        <!-- Divider -->
+                        <div class="flex items-center justify-center gap-3 my-6">
+                            <div class="h-px w-20 bg-red-dawn/30"></div>
+                            <span class="text-red-dawn font-mono text-xs">// NO DATA</span>
+                            <div class="h-px w-20 bg-red-dawn/30"></div>
+                        </div>
+                        
+                        <!-- Back Button -->
+                        <a href="{{ .Site.BaseURL }}" 
+                           class="inline-flex items-center gap-2 bg-red-dawn hover:bg-red-crimson text-text-primary font-roboto-condensed font-bold px-6 py-3 sm:px-8 sm:py-4 transition-all duration-300 hover:scale-105 uppercase tracking-wider text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                            </svg>
+                            Вернуться на главную
+                        </a>
+                    </div>
+                    
+                    <!-- Bottom Status Bar -->
+                    <div class="relative bg-black-base/30 border-t border-red-dawn/30 px-4 sm:px-6 py-2">
+                        <div class="flex items-center justify-between text-xs font-mono text-text-secondary">
+                            <span>ARTICLES FOUND: 0</span>
+                            <span class="flex items-center gap-2">
+                                <span>AWAITING CONTENT</span>
+                                <div class="w-2 h-2 bg-text-secondary rounded-full animate-pulse"></div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    {{ partial "footer.html" . }}
+</div>
+{{ else if not $validPage }}
+<!-- Несуществующая страница пагинации - показываем 404 -->
+<div class="w-full min-h-screen bg-black-base flex flex-col">
+    {{ partial "header.html" . }}
+    
+    <main class="flex-1 pt-20 sm:pt-24 pb-16">
+        <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
+            <div class="text-center py-12 sm:py-16">
+                <div class="mb-8">
+                    <svg class="w-24 h-24 mx-auto text-red-dawn" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-russo text-text-primary mb-4">
+                    Страница не найдена
+                </h2>
+                <p class="text-lg sm:text-xl font-roboto-condensed text-text-secondary mb-8">
+                    Страница {{ .Paginator.PageNumber }} не существует. Всего страниц: {{ .Paginator.TotalPages }}
+                </p>
+                <a href="{{ .Site.BaseURL }}news/" 
+                   class="inline-block bg-red-dawn hover:bg-red-crimson text-text-primary font-roboto-condensed font-bold px-8 py-3 rounded-lg transition-all duration-300 hover:scale-105 uppercase tracking-wider text-sm sm:text-base">
+                    Вернуться к новостям
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    {{ partial "footer.html" . }}
+</div>
+{{ else }}
+<div class="w-full min-h-screen bg-black-base flex flex-col">
+    {{ partial "header.html" . }}
+    
+    <main class="flex-1 pt-20 sm:pt-24 pb-16">
+        <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-russo text-text-primary mb-8 sm:mb-12 tracking-wide text-center">
+                БАЗАРИМ / НОВОСТИ
+            </h1>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {{ range .Paginator.Pages }}
+                <a href="{{ .RelPermalink }}" class="bg-gunmetal-gray rounded-lg overflow-hidden hover:scale-105 transition-transform group">
+                    <img src="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&h=600&fit=crop{{ end }}" 
+                         alt="{{ .Title }}" 
+                         class="w-full h-40 sm:h-48 object-cover transition-transform group-hover:scale-110">
+                    <div class="p-4 sm:p-6">
+                        <h2 class="text-lg sm:text-xl font-russo text-text-primary mb-2 tracking-wide">
+                            {{ .Title }}
+                        </h2>
+                        <p class="text-text-secondary font-roboto-condensed text-xs sm:text-sm mb-3 sm:mb-4">
+                            {{ .Date.Format "02.01.2006" }}
+                        </p>
+                        <p class="text-text-secondary font-roboto-condensed text-sm sm:text-base line-clamp-3">
+                            {{ .Summary | plainify | truncate 160 }}
+                        </p>
+                    </div>
+                </a>
+                {{ end }}
+            </div>
+            
+            <!-- Пагинация -->
+            {{ if gt .Paginator.TotalPages 1 }}
+            <nav class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 sm:mt-16" aria-label="Пагинация">
+                <!-- Навигация влево -->
+                <div class="flex gap-2">
+                    {{ if .Paginator.HasPrev }}
+                    <!-- Кнопка "В начало" (показываем на всех страницах кроме первой) -->
+                    <a href="{{ .Paginator.First.URL }}" 
+                       class="px-3 py-2 bg-gunmetal-gray hover:bg-red-dawn text-text-primary font-roboto-condensed rounded transition-colors flex items-center gap-1 text-sm"
+                       aria-label="Первая страница"
+                       title="Первая страница">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+                        </svg>
+                        <span class="hidden sm:inline">В начало</span>
+                    </a>
+                    
+                    <!-- Кнопка "Назад" (показываем на всех страницах кроме первой) -->
+                    <a href="{{ .Paginator.Prev.URL }}" 
+                       class="px-3 py-2 bg-gunmetal-gray hover:bg-red-dawn text-text-primary font-roboto-condensed rounded transition-colors flex items-center gap-1 text-sm"
+                       aria-label="Предыдущая страница"
+                       title="Предыдущая страница">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        <span class="hidden sm:inline">Назад</span>
+                    </a>
+                    {{ end }}
+                </div>
+                
+                <!-- Номера страниц -->
+                <div class="flex gap-2 flex-wrap justify-center">
+                    {{ $paginator := .Paginator }}
+                    {{ $currentPage := $paginator.PageNumber }}
+                    {{ $totalPages := $paginator.TotalPages }}
+                    
+                    {{ if le $totalPages 10 }}
+                        <!-- Если страниц <= 10, показываем все -->
+                        {{ range $paginator.Pagers }}
+                        <a href="{{ .URL }}" 
+                           class="px-3 py-2 {{ if eq .PageNumber $currentPage }}bg-red-dawn{{ else }}bg-gunmetal-gray hover:bg-red-dawn{{ end }} text-text-primary font-roboto-condensed rounded transition-colors text-sm font-bold min-w-[40px] text-center"
+                           {{ if eq .PageNumber $currentPage }}aria-current="page"{{ end }}
+                           aria-label="Страница {{ .PageNumber }}">
+                            {{ .PageNumber }}
+                        </a>
+                        {{ end }}
+                    {{ else }}
+                        <!-- Если страниц > 10, показываем с многоточием -->
+                        {{ range $paginator.Pagers }}
+                            {{ $pageNum := .PageNumber }}
+                            
+                            {{ if or (le $pageNum 9) (eq $pageNum $totalPages) (and (ge $pageNum (sub $currentPage 1)) (le $pageNum (add $currentPage 1))) }}
+                                <a href="{{ .URL }}" 
+                                   class="px-3 py-2 {{ if eq $pageNum $currentPage }}bg-red-dawn{{ else }}bg-gunmetal-gray hover:bg-red-dawn{{ end }} text-text-primary font-roboto-condensed rounded transition-colors text-sm font-bold min-w-[40px] text-center"
+                                   {{ if eq $pageNum $currentPage }}aria-current="page"{{ end }}
+                                   aria-label="Страница {{ $pageNum }}">
+                                    {{ $pageNum }}
+                                </a>
+                                
+                                <!-- Многоточие перед последней страницей -->
+                                {{ if and (eq $pageNum 9) (gt $totalPages 10) (lt $currentPage (sub $totalPages 2)) }}
+                                <span class="px-3 py-2 text-text-secondary font-roboto-condensed text-sm">...</span>
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+                    {{ end }}
+                </div>
+                
+                <!-- Навигация вправо -->
+                <div class="flex gap-2">
+                    {{ if .Paginator.HasNext }}
+                    <!-- Кнопка "Вперёд" (показываем на всех страницах кроме последней) -->
+                    <a href="{{ .Paginator.Next.URL }}" 
+                       class="px-3 py-2 bg-gunmetal-gray hover:bg-red-dawn text-text-primary font-roboto-condensed rounded transition-colors flex items-center gap-1 text-sm"
+                       aria-label="Следующая страница"
+                       title="Следующая страница">
+                        <span class="hidden sm:inline">Вперёд</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    
+                    <!-- Кнопка "В конец" (показываем на всех страницах кроме последней) -->
+                    <a href="{{ .Paginator.Last.URL }}" 
+                       class="px-3 py-2 bg-gunmetal-gray hover:bg-red-dawn text-text-primary font-roboto-condensed rounded transition-colors flex items-center gap-1 text-sm"
+                       aria-label="Последняя страница"
+                       title="Последняя страница">
+                        <span class="hidden sm:inline">В конец</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    {{ end }}
+                </div>
+            </nav>
+            {{ end }}
+        </div>
+    </main>
+    
+    {{ partial "footer.html" . }}
+</div>
+{{ end }}
+{{ end }}
