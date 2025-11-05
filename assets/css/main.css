@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-black-base: #0D0D0D;
+  --color-gunmetal-gray: #2A2A2A;
+  --color-charcoal-matte: #3C3C3C;
+  --color-red-dawn: #B62828;
+  --color-red-crimson: #7A1E1E;
+  --color-coyote-brown: #8B6B3E;
+  --color-ranger-tan: #A67C52;
+  --color-olive-drab: #5B5B45;
+  --color-text-primary: #EAEAEA;
+  --color-text-secondary: #B0B0B0;
+  
+  /* Font Families */
+  --font-russo: 'Russo One', sans-serif;
+  --font-roboto-condensed: 'Roboto Condensed', sans-serif;
+}
