@@ -13,7 +13,7 @@ const MissionTimer = {
      * Configuration
      */
     config: {
-        updateInterval: 60000 // Update every minute
+    updateInterval: 1000 // Update every second
     },
     
     /**

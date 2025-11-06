@@ -7,7 +7,9 @@ disableKinds = ['taxonomy', 'term']
   pagerSize = 6
 
 [params]
-  description = 'Red Dawn - Тактическая команда'
+  description = 'Московская страйкбольная команда Red Dawn'
+  keywords = ['страйкбольная команда', 'страйкбол', 'Red Dawn', 'команда', 'airsoft']
+  author = 'Chief'
 
 [markup]
   [markup.goldmark]

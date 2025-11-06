@@ -24,6 +24,10 @@ const RedDawnApp = {
             ScrollManager.init();
         }
         
+        if (typeof SnapScrollManager !== 'undefined') {
+            SnapScrollManager.init();
+        }
+        
         if (typeof StatsCounter !== 'undefined') {
             StatsCounter.init();
         }
