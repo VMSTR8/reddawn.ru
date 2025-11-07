@@ -116,6 +116,11 @@ const ScrollManager = {
             top: 0,
             behavior: 'smooth'
         });
+        
+        // Remove hash from URL if present
+        if (window.location.hash) {
+            history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
     },
     
     /**
