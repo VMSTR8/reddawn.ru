@@ -28,6 +28,21 @@ const ScrollManager = {
     },
     
     /**
+     * Cached measurements (to prevent forced reflow)
+     */
+    cache: {
+        windowHeight: 0,
+        footerTop: 0,
+        buttonBottom: 32,
+        needsUpdate: true
+    },
+    
+    /**
+     * Animation frame ID
+     */
+    rafId: null,
+    
+    /**
      * Initialize scroll functionality
      */
     init: function() {
@@ -56,15 +71,17 @@ const ScrollManager = {
         // Track window scroll (for regular pages)
         window.addEventListener('scroll', function() {
             self.toggleScrollButton(window.pageYOffset);
+            self.invalidateCache();
             self.adjustButtonPosition();
-        });
+        }, { passive: true });
         
         // Track main element scroll (for homepage with snap-scroll)
         if (this.elements.mainElement) {
             this.elements.mainElement.addEventListener('scroll', function() {
                 self.toggleScrollButton(this.scrollTop);
+                self.invalidateCache();
                 self.adjustButtonPosition();
-            });
+            }, { passive: true });
         }
         
         // Handle scroll-to-top button click
@@ -75,9 +92,14 @@ const ScrollManager = {
         }
         
         // Adjust on resize
+        let resizeTimeout;
         window.addEventListener('resize', function() {
-            self.adjustButtonPosition();
-        });
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                self.invalidateCache();
+                self.adjustButtonPosition();
+            }, 150);
+        }, { passive: true });
         
         // Initial position check
         this.adjustButtonPosition();
@@ -124,31 +146,61 @@ const ScrollManager = {
     },
     
     /**
+     * Update cached measurements (called on scroll/resize)
+     */
+    updateCache: function() {
+        if (!this.cache.needsUpdate) return;
+        
+        // Batch all reads together (prevents forced reflow)
+        this.cache.windowHeight = window.innerHeight;
+        
+        if (this.elements.footer) {
+            this.cache.footerTop = this.elements.footer.getBoundingClientRect().top;
+        }
+        
+        this.cache.needsUpdate = false;
+    },
+    
+    /**
      * Adjust button position to avoid overlapping with footer
+     * Optimized version that batches DOM reads/writes
      */
     adjustButtonPosition: function() {
         if (!this.elements.scrollToTopBtn || !this.elements.footer) return;
         
-        const button = this.elements.scrollToTopBtn;
-        const footer = this.elements.footer;
-        const buttonRect = button.getBoundingClientRect();
-        const footerRect = footer.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
+        const self = this;
         
-        // Get current bottom offset from button classes
-        const computedStyle = window.getComputedStyle(button);
-        const currentBottom = parseInt(computedStyle.bottom) || 32; // default 32px (8 * 4 for bottom-8)
-        
-        // Check if footer is visible and overlapping with button zone
-        if (footerRect.top < windowHeight) {
-            // Calculate how much we need to push the button up
-            const overlap = windowHeight - footerRect.top;
-            const newBottom = overlap + 16; // 16px gap from footer
-            button.style.bottom = newBottom + 'px';
-        } else {
-            // Reset to default position
-            button.style.bottom = '';
+        // Cancel previous animation frame
+        if (this.rafId) {
+            cancelAnimationFrame(this.rafId);
         }
+        
+        // Schedule update in next animation frame
+        this.rafId = requestAnimationFrame(function() {
+            // Read phase (batch all measurements)
+            self.updateCache();
+            
+            const footerTop = self.cache.footerTop;
+            const windowHeight = self.cache.windowHeight;
+            
+            // Write phase (apply changes)
+            if (footerTop < windowHeight) {
+                const overlap = windowHeight - footerTop;
+                const newBottom = overlap + 16; // 16px gap from footer
+                self.elements.scrollToTopBtn.style.bottom = newBottom + 'px';
+            } else {
+                self.elements.scrollToTopBtn.style.bottom = '';
+            }
+            
+            self.rafId = null;
+        });
+    },
+    
+    /**
+     * Mark cache as needing update
+     */
+    invalidateCache: function() {
+        this.cache.needsUpdate = true;
     },
     
     /**
@@ -182,6 +234,8 @@ const ScrollManager = {
         
         // Add scroll listener for mobile (where snap-scroll is disabled)
         // This ensures header gets dark background on any scroll down
+        let ticking = false;
+        
         const updateHeaderOnScroll = function() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
@@ -195,24 +249,37 @@ const ScrollManager = {
                     header.classList.add('bg-transparent');
                 }
             }
+            
+            ticking = false;
         };
         
-        window.addEventListener('scroll', updateHeaderOnScroll);
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(updateHeaderOnScroll);
+                ticking = true;
+            }
+        }, { passive: true });
         
         // Also check on main element scroll (for homepage)
         if (this.elements.mainElement) {
+            let mainTicking = false;
+            
             this.elements.mainElement.addEventListener('scroll', function() {
-                if (window.innerWidth < 1024) {
-                    const scrollTop = this.scrollTop;
-                    if (scrollTop > 50) {
-                        header.classList.add('bg-black/80', 'backdrop-blur-sm');
-                        header.classList.remove('bg-transparent');
-                    } else {
-                        header.classList.remove('bg-black/80', 'backdrop-blur-sm');
-                        header.classList.add('bg-transparent');
-                    }
+                if (!mainTicking && window.innerWidth < 1024) {
+                    requestAnimationFrame(function() {
+                        const scrollTop = self.elements.mainElement.scrollTop;
+                        if (scrollTop > 50) {
+                            header.classList.add('bg-black/80', 'backdrop-blur-sm');
+                            header.classList.remove('bg-transparent');
+                        } else {
+                            header.classList.remove('bg-black/80', 'backdrop-blur-sm');
+                            header.classList.add('bg-transparent');
+                        }
+                        mainTicking = false;
+                    });
+                    mainTicking = true;
                 }
-            });
+            }, { passive: true });
         }
     }
 };

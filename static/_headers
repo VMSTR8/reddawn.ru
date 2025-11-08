@@ -1,0 +1,35 @@
+# Cache Control Headers для статических ресурсов
+# Этот файл работает на Netlify и Cloudflare Pages
+# Для GitHub Pages требуется настройка через Actions
+
+# HTML страницы - кэшировать на короткий срок
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# CSS файлы - долгое кэширование
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# JavaScript файлы - долгое кэширование
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Изображения - долгое кэширование
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Шрифты - долгое кэширование
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Favicon и манифест
+/images/favicon/*
+  Cache-Control: public, max-age=604800
+
+# XML и RSS - короткое кэширование
+/*.xml
+  Cache-Control: public, max-age=3600
+
+# Корневая страница - короткое кэширование
+/
+  Cache-Control: public, max-age=3600, must-revalidate
