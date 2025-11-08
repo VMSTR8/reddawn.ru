@@ -21,28 +21,32 @@ const RedDawnApp = {
     init: function() {
         const self = this;
         
-        // Read phase: Check which modules exist
+        // Check which modules exist (no DOM access, fast)
         const hasScrollManager = typeof ScrollManager !== 'undefined';
         const hasSnapScrollManager = typeof SnapScrollManager !== 'undefined';
         
-        // Write phase: Initialize critical modules (already in RAF from DOMContentLoaded)
-        if (hasScrollManager) {
-            ScrollManager.init();
-        }
-        if (hasSnapScrollManager) {
-            SnapScrollManager.init();
-        }
-        
-        // Schedule non-critical modules after paint
-        if (typeof requestIdleCallback !== 'undefined') {
-            requestIdleCallback(function() { 
-                self.initSecondaryModules(); 
-            });
-        } else {
-            setTimeout(function() { 
-                self.initSecondaryModules(); 
-            }, 100);
-        }
+        // Defer module initialization to next animation frame
+        // This separates module init from any potential parent reflow
+        requestAnimationFrame(function() {
+            // Initialize critical modules
+            if (hasScrollManager) {
+                ScrollManager.init();
+            }
+            if (hasSnapScrollManager) {
+                SnapScrollManager.init();
+            }
+            
+            // Schedule non-critical modules for even later
+            if (typeof requestIdleCallback !== 'undefined') {
+                requestIdleCallback(function() { 
+                    self.initSecondaryModules(); 
+                }, { timeout: 1000 });
+            } else {
+                setTimeout(function() { 
+                    self.initSecondaryModules(); 
+                }, 100);
+            }
+        });
     },
     
     /**
@@ -85,31 +89,40 @@ window.RedDawnViewport = {
 
 /**
  * Initialize app when DOM is fully loaded
- * Use requestIdleCallback for maximum performance
+ * Use requestIdleCallback for maximum performance - all work deferred to idle time
  */
 document.addEventListener('DOMContentLoaded', function() {
-    // Cache viewport dimensions immediately (needed for layout)
-    window.RedDawnViewport.update();
-    
-    // Defer app initialization until browser is idle
-    // This ensures all JavaScript runs after critical rendering is complete
+    // Defer ALL initialization (including viewport cache) until browser is idle
+    // This completely eliminates forced reflow during critical rendering path
     if (typeof requestIdleCallback !== 'undefined') {
         requestIdleCallback(function() {
+            // Cache viewport dimensions when browser is idle
+            window.RedDawnViewport.update();
+            
+            // Initialize app immediately after
             RedDawnApp.init();
         }, { timeout: 2000 });
     } else {
         // Fallback for browsers without requestIdleCallback
         setTimeout(function() {
+            window.RedDawnViewport.update();
             RedDawnApp.init();
         }, 1);
     }
     
-    // Update viewport cache on resize (throttled)
+    // Update viewport cache on resize (throttled and deferred)
     let resizeTimeout;
     window.addEventListener('resize', function() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(function() {
-            window.RedDawnViewport.update();
+            // Defer to next idle time
+            if (typeof requestIdleCallback !== 'undefined') {
+                requestIdleCallback(function() {
+                    window.RedDawnViewport.update();
+                });
+            } else {
+                window.RedDawnViewport.update();
+            }
         }, 150);
     }, { passive: true });
 });
