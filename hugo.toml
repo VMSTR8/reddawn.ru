@@ -8,7 +8,7 @@ disableKinds = ['taxonomy', 'term']
 
 [params]
   description = 'Московская страйкбольная команда Red Dawn'
-  keywords = ['страйкбольная команда', 'страйкбол', 'Red Dawn', 'команда', 'airsoft']
+  keywords = ['страйкбольная команда', 'Московская страйкбольная команда', 'страйкбол', 'Red Dawn', 'команда', 'airsoft']
   author = 'Chief'
 
 [markup]
