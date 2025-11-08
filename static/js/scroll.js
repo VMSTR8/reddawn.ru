@@ -24,7 +24,8 @@ const ScrollManager = {
         mainElement: null,
         header: null,
         heroSection: null,
-        footer: null
+        footer: null,
+        joinSection: null
     },
     
     /**
@@ -72,6 +73,7 @@ const ScrollManager = {
         this.elements.header = document.getElementById('site-header');
         this.elements.heroSection = document.getElementById('hero-section');
         this.elements.footer = document.getElementById('site-footer');
+        this.elements.joinSection = document.getElementById('join');
     },
     
     /**
@@ -120,6 +122,25 @@ const ScrollManager = {
             }, 200);
         }, { passive: true });
         
+        // Mobile fix: track when join section gets focus/scrolled into view
+        if (this.elements.joinSection) {
+            // Use IntersectionObserver to detect when join section is visible
+            const joinObserver = new IntersectionObserver(
+                function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            // Join section is visible, ensure button shows
+                            setTimeout(function() {
+                                self.checkScrollPosition();
+                            }, 100);
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+            joinObserver.observe(this.elements.joinSection);
+        }
+        
         // Handle hash navigation (for anchor links like #join)
         window.addEventListener('hashchange', function() {
             // Delay to ensure scroll has completed
@@ -143,6 +164,18 @@ const ScrollManager = {
         document.addEventListener('click', function(e) {
             const target = e.target.closest('a[href*="#"]');
             if (target && target.hash) {
+                // Check if clicking on same hash that's already active
+                const isSameHash = window.location.hash === target.hash;
+                
+                // If clicking on #join specifically, force button to show
+                if (target.hash === '#join') {
+                    // Immediately show button since we know we'll be at bottom
+                    if (self.elements.scrollToTopBtn) {
+                        self.elements.scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+                        self.elements.scrollToTopBtn.classList.add('opacity-100', 'visible');
+                    }
+                }
+                
                 // Multiple checks to catch the scroll position
                 setTimeout(function() {
                     self.checkScrollPosition();
@@ -153,6 +186,16 @@ const ScrollManager = {
                 setTimeout(function() {
                     self.checkScrollPosition();
                 }, 700);
+                
+                // For same hash clicks, add immediate check too (mobile fix)
+                if (isSameHash) {
+                    setTimeout(function() {
+                        self.checkScrollPosition();
+                    }, 50);
+                    setTimeout(function() {
+                        self.checkScrollPosition();
+                    }, 100);
+                }
             }
         }, { passive: true });
         
@@ -164,13 +207,28 @@ const ScrollManager = {
      * Check current scroll position and update button visibility
      */
     checkScrollPosition: function() {
-        // Check main element scroll (for homepage)
-        if (this.elements.mainElement) {
-            this.toggleScrollButton(this.elements.mainElement.scrollTop);
-        } else {
-            // Check window scroll (for other pages)
-            this.toggleScrollButton(window.pageYOffset);
+        // Try to get scroll position from multiple sources
+        let scrollTop = 0;
+        
+        // Check main element scroll (for homepage with snap-scroll on desktop)
+        if (this.elements.mainElement && this.elements.mainElement.scrollTop > 0) {
+            scrollTop = this.elements.mainElement.scrollTop;
+        } 
+        // Check window scroll (works on mobile and regular pages)
+        else if (window.pageYOffset > 0) {
+            scrollTop = window.pageYOffset;
         }
+        // Check document scroll (alternative method)
+        else if (document.documentElement.scrollTop > 0) {
+            scrollTop = document.documentElement.scrollTop;
+        }
+        // If at #join hash, assume we're scrolled down
+        else if (window.location.hash === '#join') {
+            // Force a high scroll value to show button
+            scrollTop = 999;
+        }
+        
+        this.toggleScrollButton(scrollTop);
         this.invalidateCache();
         this.adjustButtonPosition();
     },
