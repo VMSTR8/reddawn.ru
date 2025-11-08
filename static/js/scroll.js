@@ -157,10 +157,13 @@ const ScrollManager = {
     initHeaderEffect: function() {
         if (!this.elements.heroSection || !this.elements.header) return;
         
+        const self = this;
+        const header = this.elements.header;
+        
+        // Use IntersectionObserver for desktop (with snap-scroll)
         const observer = new IntersectionObserver(
             function(entries) {
                 entries.forEach(function(entry) {
-                    const header = document.getElementById('site-header');
                     if (!header) return;
                     
                     if (!entry.isIntersecting) {
@@ -176,5 +179,40 @@ const ScrollManager = {
         );
         
         observer.observe(this.elements.heroSection);
+        
+        // Add scroll listener for mobile (where snap-scroll is disabled)
+        // This ensures header gets dark background on any scroll down
+        const updateHeaderOnScroll = function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // On mobile (< 1024px) activate dark header on minimal scroll
+            if (window.innerWidth < 1024) {
+                if (scrollTop > 50) {
+                    header.classList.add('bg-black/80', 'backdrop-blur-sm');
+                    header.classList.remove('bg-transparent');
+                } else {
+                    header.classList.remove('bg-black/80', 'backdrop-blur-sm');
+                    header.classList.add('bg-transparent');
+                }
+            }
+        };
+        
+        window.addEventListener('scroll', updateHeaderOnScroll);
+        
+        // Also check on main element scroll (for homepage)
+        if (this.elements.mainElement) {
+            this.elements.mainElement.addEventListener('scroll', function() {
+                if (window.innerWidth < 1024) {
+                    const scrollTop = this.scrollTop;
+                    if (scrollTop > 50) {
+                        header.classList.add('bg-black/80', 'backdrop-blur-sm');
+                        header.classList.remove('bg-transparent');
+                    } else {
+                        header.classList.remove('bg-black/80', 'backdrop-blur-sm');
+                        header.classList.add('bg-transparent');
+                    }
+                }
+            });
+        }
     }
 };
