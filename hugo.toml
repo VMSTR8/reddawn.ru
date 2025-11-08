@@ -1,4 +1,4 @@
-baseURL = 'https://username.github.io/reddawn/'
+baseURL = 'https://reddawn.ru'
 languageCode = 'ru-ru'
 title = 'Red Dawn'
 disableKinds = ['taxonomy', 'term']
