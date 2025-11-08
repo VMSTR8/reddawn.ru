@@ -43,6 +43,7 @@ const SnapScrollManager = {
     cache: {
         sectionPositions: [],
         viewportHeight: 0,
+        viewportWidth: 0,
         needsUpdate: true
     },
     
@@ -50,8 +51,12 @@ const SnapScrollManager = {
      * Initialize snap scroll functionality
      */
     init: function() {
+        // Use global viewport cache if available, fallback to direct read
+        this.cache.viewportWidth = window.RedDawnViewport ? 
+            window.RedDawnViewport.width : window.innerWidth;
+        
         // Only run on desktop with snap-scroll enabled
-        if (window.innerWidth < 768) return;
+        if (this.cache.viewportWidth < 768) return;
         
         // Only activate on Windows - macOS handles snap-scroll perfectly with native CSS
         if (!this.isWindows()) return;
@@ -89,8 +94,16 @@ const SnapScrollManager = {
      * Update cached measurements (called on resize/init)
      */
     updateCache: function() {
-        // Batch all reads together
-        this.cache.viewportHeight = window.innerHeight;
+        // Batch all reads together (prevents forced reflow)
+        // Use global viewport cache if available
+        if (window.RedDawnViewport) {
+            this.cache.viewportHeight = window.RedDawnViewport.height;
+            this.cache.viewportWidth = window.RedDawnViewport.width;
+        } else {
+            this.cache.viewportHeight = window.innerHeight;
+            this.cache.viewportWidth = window.innerWidth;
+        }
+        
         this.cache.sectionPositions = this.elements.sections.map(function(section) {
             return {
                 top: section.offsetTop,

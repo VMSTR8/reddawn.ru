@@ -152,7 +152,9 @@ const ScrollManager = {
         if (!this.cache.needsUpdate) return;
         
         // Batch all reads together (prevents forced reflow)
-        this.cache.windowHeight = window.innerHeight;
+        // Use global viewport cache if available
+        this.cache.windowHeight = window.RedDawnViewport ? 
+            window.RedDawnViewport.height : window.innerHeight;
         
         if (this.elements.footer) {
             this.cache.footerTop = this.elements.footer.getBoundingClientRect().top;
