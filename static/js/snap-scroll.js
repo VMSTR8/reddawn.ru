@@ -38,6 +38,15 @@ const SnapScrollManager = {
     },
     
     /**
+     * Cached measurements (to prevent forced reflow)
+     */
+    cache: {
+        sectionPositions: [],
+        viewportHeight: 0,
+        needsUpdate: true
+    },
+    
+    /**
      * Initialize snap scroll functionality
      */
     init: function() {
@@ -73,6 +82,29 @@ const SnapScrollManager = {
     cacheElements: function() {
         this.elements.mainElement = document.querySelector('main');
         this.elements.sections = Array.from(document.querySelectorAll('section.snap-start'));
+        this.updateCache();
+    },
+    
+    /**
+     * Update cached measurements (called on resize/init)
+     */
+    updateCache: function() {
+        // Batch all reads together
+        this.cache.viewportHeight = window.innerHeight;
+        this.cache.sectionPositions = this.elements.sections.map(function(section) {
+            return {
+                top: section.offsetTop,
+                bottom: section.offsetTop + section.offsetHeight
+            };
+        });
+        this.cache.needsUpdate = false;
+    },
+    
+    /**
+     * Mark cache as needing update
+     */
+    invalidateCache: function() {
+        this.cache.needsUpdate = true;
     },
     
     /**
@@ -98,9 +130,10 @@ const SnapScrollManager = {
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(function() {
-                self.init();
+                self.invalidateCache();
+                self.updateCache();
             }, 250);
-        });
+        }, { passive: true });
     },
     
     /**
@@ -153,16 +186,18 @@ const SnapScrollManager = {
      */
     scrollToSection: function(sectionIndex) {
         const self = this;
-        const targetSection = this.elements.sections[sectionIndex];
         
-        if (!targetSection) return;
+        if (sectionIndex < 0 || sectionIndex >= this.cache.sectionPositions.length) return;
         
         this.state.isScrolling = true;
         this.state.currentSection = sectionIndex;
         
+        // Use cached position instead of reading offsetTop
+        const targetTop = this.cache.sectionPositions[sectionIndex].top;
+        
         // Smooth scroll to section
         this.elements.mainElement.scrollTo({
-            top: targetSection.offsetTop,
+            top: targetTop,
             behavior: 'smooth'
         });
         
@@ -178,17 +213,19 @@ const SnapScrollManager = {
     detectCurrentSection: function() {
         if (this.state.isScrolling) return;
         
-        const scrollTop = this.elements.mainElement.scrollTop;
-        const viewportHeight = window.innerHeight;
-        const midPoint = scrollTop + (viewportHeight / 2);
+        // Update cache if needed
+        if (this.cache.needsUpdate) {
+            this.updateCache();
+        }
         
-        // Find which section the midpoint is in
-        for (let i = 0; i < this.elements.sections.length; i++) {
-            const section = this.elements.sections[i];
-            const sectionTop = section.offsetTop;
-            const sectionBottom = sectionTop + section.offsetHeight;
+        const scrollTop = this.elements.mainElement.scrollTop;
+        const midPoint = scrollTop + (this.cache.viewportHeight / 2);
+        
+        // Find which section the midpoint is in using cached positions
+        for (let i = 0; i < this.cache.sectionPositions.length; i++) {
+            const pos = this.cache.sectionPositions[i];
             
-            if (midPoint >= sectionTop && midPoint < sectionBottom) {
+            if (midPoint >= pos.top && midPoint < pos.bottom) {
                 this.state.currentSection = i;
                 break;
             }
