@@ -46,15 +46,21 @@ const ScrollManager = {
      * Initialize scroll functionality
      */
     init: function() {
-        this.cacheElements();
-        this.bindEvents();
-        this.initHeaderEffect();
+        const self = this;
+        
+        // Batch all DOM queries in one go to prevent multiple reflows
+        requestAnimationFrame(function() {
+            self.cacheElements();
+            self.bindEvents();
+            self.initHeaderEffect();
+        });
     },
     
     /**
      * Cache DOM elements
      */
     cacheElements: function() {
+        // Batch all DOM queries together
         this.elements.scrollToTopBtn = document.getElementById('scrollToTop');
         this.elements.mainElement = document.querySelector('main');
         this.elements.header = document.getElementById('site-header');

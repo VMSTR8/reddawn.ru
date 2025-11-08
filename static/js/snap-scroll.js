@@ -51,6 +51,8 @@ const SnapScrollManager = {
      * Initialize snap scroll functionality
      */
     init: function() {
+        const self = this;
+        
         // Use global viewport cache if available, fallback to direct read
         this.cache.viewportWidth = window.RedDawnViewport ? 
             window.RedDawnViewport.width : window.innerWidth;
@@ -61,15 +63,18 @@ const SnapScrollManager = {
         // Only activate on Windows - macOS handles snap-scroll perfectly with native CSS
         if (!this.isWindows()) return;
         
-        this.cacheElements();
-        
-        if (!this.elements.mainElement || this.elements.sections.length === 0) {
-            return; // No snap-scroll sections found
-        }
-        
-        this.state.totalSections = this.elements.sections.length;
-        this.bindEvents();
-        this.detectCurrentSection();
+        // Batch all initialization in one frame
+        requestAnimationFrame(function() {
+            self.cacheElements();
+            
+            if (!self.elements.mainElement || self.elements.sections.length === 0) {
+                return; // No snap-scroll sections found
+            }
+            
+            self.state.totalSections = self.elements.sections.length;
+            self.bindEvents();
+            self.detectCurrentSection();
+        });
     },
     
     /**
