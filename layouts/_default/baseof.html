@@ -20,7 +20,7 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ .Permalink }}">
-    <meta property="twitter:title" content="{{ if .IsHome }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
+    <meta property="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
     <meta property="twitter:description" content="{{ .Site.Params.description }}">
     <meta property="twitter:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ "images/general/title.webp" | absURL }}{{ end }}">
     
