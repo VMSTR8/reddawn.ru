@@ -53,6 +53,12 @@ const ScrollManager = {
             self.cacheElements();
             self.bindEvents();
             self.initHeaderEffect();
+            
+            // Check position after a short delay to ensure page has fully loaded
+            // This handles cases where page loads with a hash (e.g., /#join)
+            setTimeout(function() {
+                self.checkScrollPosition();
+            }, 500);
         });
     },
     
@@ -107,7 +113,65 @@ const ScrollManager = {
             }, 150);
         }, { passive: true });
         
+        // Check scroll position after page fully loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                self.checkScrollPosition();
+            }, 200);
+        }, { passive: true });
+        
+        // Handle hash navigation (for anchor links like #join)
+        window.addEventListener('hashchange', function() {
+            // Delay to ensure scroll has completed
+            setTimeout(function() {
+                self.checkScrollPosition();
+            }, 200);
+            // Additional check after longer delay for slower browsers
+            setTimeout(function() {
+                self.checkScrollPosition();
+            }, 500);
+        }, { passive: true });
+        
+        // Check initial hash on page load
+        if (window.location.hash) {
+            setTimeout(function() {
+                self.checkScrollPosition();
+            }, 400);
+        }
+        
+        // Handle clicks on anchor links to immediately check position
+        document.addEventListener('click', function(e) {
+            const target = e.target.closest('a[href*="#"]');
+            if (target && target.hash) {
+                // Multiple checks to catch the scroll position
+                setTimeout(function() {
+                    self.checkScrollPosition();
+                }, 150);
+                setTimeout(function() {
+                    self.checkScrollPosition();
+                }, 400);
+                setTimeout(function() {
+                    self.checkScrollPosition();
+                }, 700);
+            }
+        }, { passive: true });
+        
         // Initial position check
+        this.adjustButtonPosition();
+    },
+    
+    /**
+     * Check current scroll position and update button visibility
+     */
+    checkScrollPosition: function() {
+        // Check main element scroll (for homepage)
+        if (this.elements.mainElement) {
+            this.toggleScrollButton(this.elements.mainElement.scrollTop);
+        } else {
+            // Check window scroll (for other pages)
+            this.toggleScrollButton(window.pageYOffset);
+        }
+        this.invalidateCache();
         this.adjustButtonPosition();
     },
     
