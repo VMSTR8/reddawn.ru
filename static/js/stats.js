@@ -131,7 +131,7 @@ const StatsCounter = {
             // counters[3].setAttribute('data-target', data.win_rate);
             
         } catch (error) {
-            console.error('[StatsCounter] Error loading stats from API:', error);
+            // Error loading stats from API
         }
     }
 };

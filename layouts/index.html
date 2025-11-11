@@ -807,7 +807,7 @@
                             <!-- Name Field -->
                             <div class="relative">
                                 <label class="flex items-center gap-2 text-text-primary font-mono text-xs sm:text-sm mb-2 tracking-wider uppercase">
-                                    <span class="text-red-dawn">▸</span> Позывной / Имя
+                                    <span class="text-red-dawn">▸</span> Как зовут тебя / ФИО?
                                 </label>
                                 <div class="relative">
                                     <input type="text" name="name" required
@@ -824,7 +824,7 @@
                                     <span class="text-red-dawn">▸</span> Возраст
                                 </label>
                                 <div class="relative">
-                                    <input type="number" name="age" required
+                                    <input type="number" name="age" min="1" required
                                            class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-black-base/50 text-text-primary border-2 border-red-dawn/30 focus:border-red-dawn outline-none transition-all text-sm sm:text-base font-roboto-condensed tracking-wide">
                                     <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
                                     <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
@@ -835,18 +835,53 @@
                                 <div class="error-message text-red-dawn text-xs font-mono mt-1.5 ml-1 hidden"></div>
                             </div>
                             
-                            <!-- Telegram Field -->
+                            <!-- Contact Type Selection -->
                             <div class="relative">
-                                <label class="flex items-center gap-2 text-text-primary font-mono text-xs sm:text-sm mb-2 tracking-wider uppercase">
-                                    <span class="text-red-dawn">▸</span> Telegram
+                                <label class="flex items-center gap-2 text-text-primary font-mono text-xs sm:text-sm mb-3 tracking-wider uppercase">
+                                    <span class="text-red-dawn">▸</span> Способ связи
                                 </label>
-                                <div class="relative">
-                                    <input type="text" name="telegram" required placeholder="@username"
-                                           class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-black-base/50 text-text-primary border-2 border-red-dawn/30 focus:border-red-dawn outline-none transition-all text-sm sm:text-base font-roboto-condensed tracking-wide placeholder:text-text-secondary/30">
-                                    <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
-                                    <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                                <div class="grid grid-cols-2 gap-3 sm:gap-4 mb-4">
+                                    <label class="relative cursor-pointer group">
+                                        <input type="radio" name="contactType" value="telegram" checked class="absolute opacity-0">
+                                        <div class="contact-type-box relative bg-black-base/50 border-2 border-red-dawn transition-all p-3 sm:p-4 text-center">
+                                            <div class="corner-accent absolute top-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                                            <div class="corner-accent absolute bottom-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                                            <div class="contact-type-label font-mono text-xs sm:text-sm text-text-primary tracking-wider transition-colors">TELEGRAM</div>
+                                            <div class="mt-1 text-xs font-mono text-text-secondary">@USERNAME</div>
+                                        </div>
+                                    </label>
+                                    <label class="relative cursor-pointer group">
+                                        <input type="radio" name="contactType" value="phone" class="absolute opacity-0">
+                                        <div class="contact-type-box relative bg-black-base/50 border-2 border-red-dawn/30 transition-all p-3 sm:p-4 text-center">
+                                            <div class="corner-accent absolute top-0 left-0 w-2 h-2 bg-red-dawn opacity-0 transition-opacity"></div>
+                                            <div class="corner-accent absolute bottom-0 right-0 w-2 h-2 bg-red-dawn opacity-0 transition-opacity"></div>
+                                            <div class="contact-type-label font-mono text-xs sm:text-sm text-text-primary tracking-wider transition-colors">ТЕЛЕФОН</div>
+                                            <div class="mt-1 text-xs font-mono text-text-secondary">+7 XXX XXX</div>
+                                        </div>
+                                    </label>
                                 </div>
-                                <div class="error-message text-red-dawn text-xs font-mono mt-1.5 ml-1 hidden"></div>
+                                
+                                <!-- Telegram Input -->
+                                <div id="telegram-field" class="relative">
+                                    <div class="relative">
+                                        <input type="text" name="telegram" placeholder="@username"
+                                               class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-black-base/50 text-text-primary border-2 border-red-dawn/30 focus:border-red-dawn outline-none transition-all text-sm sm:text-base font-roboto-condensed tracking-wide placeholder:text-text-secondary/30">
+                                        <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                                        <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                                    </div>
+                                    <div class="error-message text-red-dawn text-xs font-mono mt-1.5 ml-1 hidden"></div>
+                                </div>
+                                
+                                <!-- Phone Input -->
+                                <div id="phone-field" class="relative hidden">
+                                    <div class="relative">
+                                        <input type="tel" name="phone" placeholder="+79001234567"
+                                               class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-black-base/50 text-text-primary border-2 border-red-dawn/30 focus:border-red-dawn outline-none transition-all text-sm sm:text-base font-roboto-condensed tracking-wide placeholder:text-text-secondary/30">
+                                        <div class="absolute top-0 right-0 w-2 h-2 bg-red-dawn"></div>
+                                        <div class="absolute bottom-0 left-0 w-2 h-2 bg-red-dawn"></div>
+                                    </div>
+                                    <div class="error-message text-red-dawn text-xs font-mono mt-1.5 ml-1 hidden"></div>
+                                </div>
                             </div>
                             
                             <!-- Experience Field -->

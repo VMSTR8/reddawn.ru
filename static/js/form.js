@@ -21,16 +21,14 @@ const FormHandler = {
         maxTelegramLength: 32,
         successDisplayTime: 5000,
         errorDisplayTime: 5000,
-        // reCAPTCHA v3 Site Key (тестовый ключ для localhost)
-        recaptchaSiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+        // reCAPTCHA v3 Site Key
+        recaptchaSiteKey: '6LelqAYsAAAAABu8OjB6PGzGS7sQvxc1kVmKGwLh',
         // Минимальный score для прохождения (0.0 - 1.0, где 1.0 = точно человек)
         recaptchaMinScore: 0.5,
-        // API endpoint твоего FastAPI бота
-        // Замени на свой URL после деплоя
-        apiEndpoint: 'http://localhost:8000/api/submit-application',  // Для локальной разработки
-        // apiEndpoint: 'https://your-bot-domain.com/api/submit-application',  // Для продакшена
-        // Для теста без реального backend
-        useMockApi: true  // Поставь false когда backend будет готов
+        // API endpoint для проверки reCAPTCHA
+        apiEndpoint: 'https://test.reddawn.ru/recaptcha-verify',
+        // Реальный режим работы
+        useMockApi: false
     },
     
     /**
@@ -41,6 +39,10 @@ const FormHandler = {
         nameInput: null,
         ageInput: null,
         telegramInput: null,
+        phoneInput: null,
+        contactTypeRadios: null,
+        telegramField: null,
+        phoneField: null,
         submitButton: null,
         successMessage: null,
         errorMessage: null
@@ -52,6 +54,23 @@ const FormHandler = {
     init: function() {
         this.cacheElements();
         this.bindEvents();
+        this.loadRecaptcha();
+    },
+    
+    /**
+     * Load reCAPTCHA script dynamically with correct site key
+     */
+    loadRecaptcha: function() {
+        if (typeof grecaptcha !== 'undefined') {
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = `https://www.google.com/recaptcha/api.js?render=${this.config.recaptchaSiteKey}&badge=none`;
+        script.async = true;
+        script.defer = true;
+        
+        document.head.appendChild(script);
     },
     
     /**
@@ -64,6 +83,10 @@ const FormHandler = {
         this.elements.nameInput = this.elements.form.querySelector('input[name="name"]');
         this.elements.ageInput = this.elements.form.querySelector('input[name="age"]');
         this.elements.telegramInput = this.elements.form.querySelector('input[name="telegram"]');
+        this.elements.phoneInput = this.elements.form.querySelector('input[name="phone"]');
+        this.elements.contactTypeRadios = this.elements.form.querySelectorAll('input[name="contactType"]');
+        this.elements.telegramField = document.getElementById('telegram-field');
+        this.elements.phoneField = document.getElementById('phone-field');
         this.elements.submitButton = this.elements.form.querySelector('button[type="submit"]');
         this.elements.successMessage = document.getElementById('form-success');
         this.elements.errorMessage = document.getElementById('form-error');
@@ -80,6 +103,20 @@ const FormHandler = {
             e.preventDefault();
             self.handleSubmit();
         });
+        
+        // Contact type toggle
+        this.elements.contactTypeRadios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                self.toggleContactField();
+            });
+        });
+        
+        // Phone input formatting
+        if (this.elements.phoneInput) {
+            this.elements.phoneInput.addEventListener('input', function(e) {
+                self.formatPhoneInput(e);
+            });
+        }
     },
     
     /**
@@ -134,18 +171,125 @@ const FormHandler = {
      * @returns {string|null} Error message or null if valid
      */
     validateTelegram: function(telegram) {
-        const username = telegram.replace('@', '');
+        // Удаляем первый @ если он есть
+        const cleanValue = telegram.startsWith('@') ? telegram.slice(1) : telegram;
+        
+        // Проверяем на наличие дополнительных @
+        const extraAtSymbols = (cleanValue.match(/@/g) || []).length;
+        if (extraAtSymbols > 0) {
+            return 'Telegram username не может содержать символ @ внутри.';
+        }
+        
         const regex = /^[a-zA-Z0-9_]+$/;
         
-        if (!regex.test(username)) {
+        if (!regex.test(cleanValue)) {
             return 'Telegram username может содержать только буквы, цифры и подчеркивания.';
         }
         
-        if (username.length < this.config.minTelegramLength || username.length > this.config.maxTelegramLength) {
+        // Проверяем длину без учета первого @
+        if (cleanValue.length < this.config.minTelegramLength || cleanValue.length > this.config.maxTelegramLength) {
             return `Telegram username должен быть от ${this.config.minTelegramLength} до ${this.config.maxTelegramLength} символов.`;
         }
         
         return null;
+    },
+    
+    /**
+     * Validate phone field
+     * @param {string} phone - Phone number to validate
+     * @returns {string|null} Error message or null if valid
+     */
+    validatePhone: function(phone) {
+        // Разрешаем только + в начале и цифры
+        const regex = /^\+?\d+$/;
+        
+        if (!regex.test(phone)) {
+            return 'Номер телефона может содержать только цифры и символ + в начале.';
+        }
+        
+        // Минимальная длина номера (например, +79001234567 = 12 символов)
+        if (phone.length < 11) {
+            return 'Номер телефона слишком короткий.';
+        }
+        
+        if (phone.length > 16) {
+            return 'Номер телефона слишком длинный.';
+        }
+        
+        return null;
+    },
+    
+    /**
+     * Format phone input - allow only + and digits
+     * @param {Event} e - Input event
+     */
+    formatPhoneInput: function(e) {
+        const input = e.target;
+        let value = input.value;
+        
+        // Удаляем все, кроме цифр и +
+        let cleaned = value.replace(/[^\d+]/g, '');
+        
+        // Разрешаем + только в начале
+        if (cleaned.indexOf('+') > 0) {
+            cleaned = cleaned.replace(/\+/g, '');
+        }
+        
+        // Если есть несколько +, оставляем только первый
+        const plusCount = (cleaned.match(/\+/g) || []).length;
+        if (plusCount > 1) {
+            cleaned = '+' + cleaned.replace(/\+/g, '');
+        }
+        
+        input.value = cleaned;
+    },
+    
+    /**
+     * Toggle between Telegram and Phone fields
+     */
+    toggleContactField: function() {
+        const selectedType = this.elements.form.querySelector('input[name="contactType"]:checked').value;
+        
+        if (selectedType === 'telegram') {
+            this.elements.telegramField.classList.remove('hidden');
+            this.elements.phoneField.classList.add('hidden');
+            this.elements.telegramInput.required = true;
+            this.elements.phoneInput.required = false;
+            this.hideError(this.elements.phoneInput);
+        } else {
+            this.elements.telegramField.classList.add('hidden');
+            this.elements.phoneField.classList.remove('hidden');
+            this.elements.telegramInput.required = false;
+            this.elements.phoneInput.required = true;
+            this.hideError(this.elements.telegramInput);
+        }
+        
+        // Update radio button styling
+        this.updateContactTypeStyles();
+    },
+    
+    /**
+     * Update contact type radio button styles
+     */
+    updateContactTypeStyles: function() {
+        this.elements.contactTypeRadios.forEach(function(radio) {
+            const box = radio.parentElement.querySelector('.contact-type-box');
+            const accents = box.querySelectorAll('.corner-accent');
+            
+            if (radio.checked) {
+                box.classList.remove('border-red-dawn/30');
+                box.classList.add('border-red-dawn');
+                accents.forEach(function(accent) {
+                    accent.classList.remove('opacity-0');
+                });
+            } else {
+                box.classList.remove('border-red-dawn');
+                box.classList.add('border-red-dawn/30');
+                accents.forEach(function(accent) {
+                    accent.classList.add('opacity-0');
+                });
+            }
+        });
     },
     
     /**
@@ -192,6 +336,7 @@ const FormHandler = {
         this.hideError(this.elements.nameInput);
         this.hideError(this.elements.ageInput);
         this.hideError(this.elements.telegramInput);
+        this.hideError(this.elements.phoneInput);
         
         // Validate all fields
         let hasErrors = false;
@@ -208,10 +353,21 @@ const FormHandler = {
             hasErrors = true;
         }
         
-        const telegramError = this.validateTelegram(this.elements.telegramInput.value.trim());
-        if (telegramError) {
-            this.showError(this.elements.telegramInput, telegramError);
-            hasErrors = true;
+        // Validate contact field based on selected type
+        const contactType = this.elements.form.querySelector('input[name="contactType"]:checked').value;
+        
+        if (contactType === 'telegram') {
+            const telegramError = this.validateTelegram(this.elements.telegramInput.value.trim());
+            if (telegramError) {
+                this.showError(this.elements.telegramInput, telegramError);
+                hasErrors = true;
+            }
+        } else {
+            const phoneError = this.validatePhone(this.elements.phoneInput.value.trim());
+            if (phoneError) {
+                this.showError(this.elements.phoneInput, phoneError);
+                hasErrors = true;
+            }
         }
         
         // Prevent submission if age > maxAge
@@ -253,19 +409,15 @@ const FormHandler = {
             grecaptcha.ready(function() {
                 grecaptcha.execute(self.config.recaptchaSiteKey, {action: 'submit'})
                     .then(function(token) {
-                        console.log('✅ reCAPTCHA token получен:', token.substring(0, 20) + '...');
-                        
                         // Отправляем форму с токеном
                         self.submitForm(token);
                     })
                     .catch(function(error) {
-                        console.error('❌ Ошибка reCAPTCHA:', error);
                         self.showFormError('Ошибка проверки капчи. Попробуй обновить страницу.');
                         self.resetSubmitButton();
                     });
             });
         } else {
-            console.warn('⚠️ reCAPTCHA не загружена, отправка без проверки');
             self.submitForm(null);
         }
     },
@@ -277,34 +429,30 @@ const FormHandler = {
     submitForm: function(recaptchaToken) {
         const self = this;
         
+        // Определяем тип контакта
+        const contactType = this.elements.form.querySelector('input[name="contactType"]:checked').value;
+        
         // Собираем данные формы
         const formData = {
             name: this.elements.nameInput.value.trim(),
             age: parseInt(this.elements.ageInput.value),
-            telegram: this.elements.telegramInput.value.trim(),
             experience: this.elements.form.querySelector('input[name="experience"]:checked').value,
             recaptchaToken: recaptchaToken,
             timestamp: new Date().toISOString()
         };
         
-        console.log('📤 Отправка формы:', formData);
-        
-        // Если используем mock API (для разработки)
-        if (this.config.useMockApi) {
-            console.log('⚠️ Mock API режим (для разработки)');
-            setTimeout(function() {
-                // Имитируем 90% успешных отправок
-                const isSuccess = Math.random() > 0.1;
-                
-                if (isSuccess) {
-                    console.log('✅ Форма успешно отправлена (mock)');
-                    self.showSuccess();
-                } else {
-                    console.log('❌ Ошибка отправки формы (mock)');
-                    self.showFormError('Проблема с соединением. Попробуй позже.');
-                }
-            }, 1500);
-            return;
+        // Добавляем telegram или phone в зависимости от выбора
+        if (contactType === 'telegram') {
+            let telegramValue = this.elements.telegramInput.value.trim();
+            // Автоматически добавляем @ если его нет
+            if (!telegramValue.startsWith('@')) {
+                telegramValue = '@' + telegramValue;
+            }
+            formData.telegram = telegramValue;
+            formData.contactType = 'telegram';
+        } else {
+            formData.phone = this.elements.phoneInput.value.trim();
+            formData.contactType = 'phone';
         }
         
         // Реальная отправка на backend
@@ -316,18 +464,26 @@ const FormHandler = {
             body: JSON.stringify(formData)
         })
         .then(function(response) {
+            // Проверяем статус ответа
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                return response.json().then(function(errorData) {
+                    throw new Error(errorData.detail || 'Ошибка сервера');
+                });
             }
             return response.json();
         })
         .then(function(data) {
-            console.log('✅ Ответ сервера:', data);
-            self.showSuccess();
+            // Проверяем статус от сервера
+            if (data.status === 'ok') {
+                self.showSuccess();
+            } else {
+                self.showFormError(data.message || 'Проверка капчи не пройдена.');
+                self.resetSubmitButton();
+            }
         })
         .catch(function(error) {
-            console.error('❌ Ошибка отправки:', error);
-            self.showFormError('Ошибка отправки. Проверь подключение.');
+            self.showFormError(error.message || 'Ошибка соединения с сервером.');
+            self.resetSubmitButton();
         });
     },
     
@@ -352,6 +508,11 @@ const FormHandler = {
             self.hideError(self.elements.nameInput);
             self.hideError(self.elements.ageInput);
             self.hideError(self.elements.telegramInput);
+            self.hideError(self.elements.phoneInput);
+            
+            // Возвращаем переключатель на Telegram
+            self.toggleContactField();
+            self.updateContactTypeStyles();
             
             // Показываем форму обратно с уже сброшенным состоянием
             self.elements.form.classList.remove('hidden');
