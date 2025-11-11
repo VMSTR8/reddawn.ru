@@ -54,23 +54,38 @@ const FormHandler = {
     init: function() {
         this.cacheElements();
         this.bindEvents();
-        this.loadRecaptcha();
+        this.setupLazyRecaptchaLoad();
     },
     
     /**
-     * Load reCAPTCHA script dynamically with correct site key
+     * Setup lazy loading for reCAPTCHA - loads only on user interaction
      */
-    loadRecaptcha: function() {
-        if (typeof grecaptcha !== 'undefined') {
-            return;
+    setupLazyRecaptchaLoad: function() {
+        const self = this;
+        let loaded = false;
+        
+        const loadRecaptcha = function() {
+            if (loaded || typeof grecaptcha !== 'undefined') {
+                return;
+            }
+            
+            loaded = true;
+            const script = document.createElement('script');
+            script.src = `https://www.google.com/recaptcha/api.js?render=${self.config.recaptchaSiteKey}&badge=none`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        };
+        
+        // Load reCAPTCHA on first interaction with form
+        if (this.elements.form) {
+            ['focus', 'input', 'click'].forEach(function(eventType) {
+                self.elements.form.addEventListener(eventType, loadRecaptcha, {
+                    once: true,
+                    passive: true
+                });
+            });
         }
-        
-        const script = document.createElement('script');
-        script.src = `https://www.google.com/recaptcha/api.js?render=${this.config.recaptchaSiteKey}&badge=none`;
-        script.async = true;
-        script.defer = true;
-        
-        document.head.appendChild(script);
     },
     
     /**
