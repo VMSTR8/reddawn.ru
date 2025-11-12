@@ -33,7 +33,7 @@
             
             <!-- Featured Image -->
             <div class="mb-8 sm:mb-12 rounded-lg overflow-hidden">
-                <img src="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=1200&h=600&fit=crop{{ end }}" 
+                <img src="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}{{ .Site.BaseURL }}/images/general/news_general.webp{{ end }}" 
                      alt="{{ .Title }}" 
                      class="w-full h-48 sm:h-64 md:h-96 object-cover">
             </div>

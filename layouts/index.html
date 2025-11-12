@@ -652,7 +652,7 @@
                         
                         <!-- Image Section -->
                         <div class="relative h-40 sm:h-48 overflow-hidden">
-                            <img src="{{ if .Params.image }}{{ $.Site.BaseURL }}{{ .Params.image }}{{ else }}https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=800&h=600&fit=crop{{ end }}" 
+                            <img src="{{ if .Params.image }}{{ $.Site.BaseURL }}{{ .Params.image }}{{ else }}{{ $.Site.BaseURL }}/images/general/news_thumb.webp{{ end }}" 
                                  alt="{{ .Title }}" 
                                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0">
                             
