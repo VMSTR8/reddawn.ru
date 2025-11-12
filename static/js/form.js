@@ -26,7 +26,7 @@ const FormHandler = {
         // Минимальный score для прохождения (0.0 - 1.0, где 1.0 = точно человек)
         recaptchaMinScore: 0.5,
         // API endpoint для проверки reCAPTCHA
-        apiEndpoint: 'https://test.reddawn.ru/recaptcha-verify',
+        apiEndpoint: 'https://telegram.reddawn.ru/recaptcha-verify',
         // Реальный режим работы
         useMockApi: false
     },
