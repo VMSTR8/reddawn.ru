@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
-    <meta name="description" content="{{ .Site.Params.description }}">
+    <title>
+      {{ if .IsHome }}
+        {{ .Site.Title }} | Московская страйкбольная команда
+      {{ else if eq .Section "news" }}
+        {{ .Title }} | Блог Red Dawn о страйкболе
+      {{ else }}
+        {{ .Title }} | {{ .Site.Title }}
+      {{ end }}
+    </title>
+    
+    <!-- Dynamic description: -->
+    <meta name="description" content="
+      {{ if .IsHome }}
+        {{ .Site.Params.description }}
+      {{ else if .Description }}
+        {{ .Description }}
+      {{ else if .Summary }}
+        {{ .Summary | truncate 160 }}
+      {{ else }}
+        {{ .Site.Params.description }}
+      {{ end }}
+    ">
     <meta name="keywords" content="{{ delimit .Site.Params.keywords ", " }}">
     
     <!-- Cache Control для статических ресурсов -->
@@ -13,15 +33,51 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ .Permalink }}">
-    <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
-    <meta property="og:description" content="{{ .Site.Params.description }}">
+    <meta property="og:title" content="
+      {{ if .IsHome }}
+        {{ .Site.Title }} | Московская страйкбольная команда
+      {{ else if eq .Section "news" }}
+        {{ .Title }} | Блог Red Dawn о страйкболе
+      {{ else }}
+        {{ .Title }} - {{ .Site.Title }}
+      {{ end }}
+    ">
+    <meta property="og:description" content="
+      {{ if .IsHome }}
+        {{ .Site.Params.description }}
+      {{ else if .Description }}
+        {{ .Description }}
+      {{ else if .Summary }}
+        {{ .Summary | truncate 160 }}
+      {{ else }}
+        {{ .Site.Params.description }}
+      {{ end }}
+    ">
     <meta property="og:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ "images/general/title.webp" | absURL }}{{ end }}">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ .Permalink }}">
-    <meta property="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
-    <meta property="twitter:description" content="{{ .Site.Params.description }}">
+    <meta property="twitter:title" content="
+      {{ if .IsHome }}
+        {{ .Site.Title }} | Московская страйкбольная команда
+      {{ else if eq .Section "news" }}
+        {{ .Title }} | Блог Red Dawn о страйкболе
+      {{ else }}
+        {{ .Title }} - {{ .Site.Title }}
+      {{ end }}
+    ">
+    <meta property="twitter:description" content="
+      {{ if .IsHome }}
+        {{ .Site.Params.description }}
+      {{ else if .Description }}
+        {{ .Description }}
+      {{ else if .Summary }}
+        {{ .Summary | truncate 160 }}
+      {{ else }}
+        {{ .Site.Params.description }}
+      {{ end }}
+    ">
     <meta property="twitter:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ "images/general/title.webp" | absURL }}{{ end }}">
     
     <!-- Favicon -->
@@ -29,6 +85,23 @@
     <link rel="icon" href="{{ "images/favicon/favicon.svg" | relURL }}" type="image/svg+xml">
     <link rel="apple-touch-icon" href="{{ "images/favicon/apple-touch-icon.png" | relURL }}">
     <link rel="manifest" href="{{ "images/favicon/site.webmanifest" | relURL }}">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ .Permalink }}">
+    
+    <!-- Hreflang для русского языка -->
+    <link rel="alternate" hreflang="ru" href="{{ .Permalink }}">
+    
+    <!-- Preload критичных шрифтов -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" as="style">
+    
+    <!-- DNS prefetch для внешних ресурсов -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    
+    <!-- Theme color для мобильных браузеров -->
+    <meta name="theme-color" content="#0D0D0D">
+    <meta name="msapplication-TileColor" content="#B62828">
     
     <!-- Preconnect для оптимизации загрузки шрифтов -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,6 +159,58 @@
     <noscript>
         <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     </noscript>
+
+    <!-- Schema.org Organization Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsOrganization",
+      "name": "Red Dawn Airsoft Team",
+      "url": "https://reddawn.ru",
+      "logo": "https://reddawn.ru/images/general/reddawn.webp",
+      "description": "Московская профессиональная страйкбольная команда Red Dawn. Набор игроков 21+. Тренировки, игры, снаряжение. Вступай в Red Dawn!",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Москва",
+        "addressCountry": "RU"
+      },
+      "sport": "Airsoft",
+      "sameAs": [
+        "https://t.me/reddawnairsoft"
+      ]
+    }
+    </script>
+
+    {{ if not .IsHome }}
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "https://reddawn.ru"
+      },
+      {{ if eq .Section "news" }}
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Новости",
+        "item": "https://reddawn.ru/news/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ .Title }}",
+        "item": "{{ .Permalink }}"
+      }
+      {{ end }}
+      ]
+    }
+    </script>
+    {{ end }}
 </head>
 <body class="bg-black-base text-text-primary">
     {{ block "main" . }}{{ end }}

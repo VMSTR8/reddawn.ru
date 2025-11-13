@@ -4,17 +4,16 @@
     
     <main class="pt-20 sm:pt-24 pb-12 sm:pb-16">
         <article class="container mx-auto px-4 sm:px-6 max-w-4xl">
-            <!-- Back Button -->
-            <div class="mb-6 sm:mb-8">
-                <a href="{{ .Site.BaseURL }}news/" 
-                   class="inline-flex items-center space-x-2 text-red-dawn hover:text-red-crimson font-roboto-condensed transition-colors text-sm sm:text-base">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                    <span class="text-sm sm:text-base">Назад к новостям</span>
-                </a>
-            </div>
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb" class="mb-6 sm:mb-8">
+                <ol class="flex items-center space-x-2 text-sm font-roboto-condensed">
+                    <li><a href="/" class="text-red-dawn hover:text-red-crimson transition-colors">Главная</a></li>
+                    <li class="text-text-secondary">/</li>
+                    <li><a href="/news/" class="text-red-dawn hover:text-red-crimson transition-colors">Базарим</a></li>
+                    <li class="text-text-secondary">/</li>
+                    <li class="text-text-secondary truncate max-w-xs sm:max-w-md">{{ .Title }}</li>
+                </ol>
+            </nav>
             
             <!-- Header -->
             <header class="mb-8 sm:mb-12">
@@ -34,18 +33,88 @@
             <!-- Featured Image -->
             <div class="mb-8 sm:mb-12 rounded-lg overflow-hidden">
                 <img src="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}{{ .Site.BaseURL }}/images/general/news_general.webp{{ end }}" 
-                     alt="{{ .Title }}" 
-                     class="w-full h-48 sm:h-64 md:h-96 object-cover">
+                     alt="{{ .Title }} - страйкбольная команда Red Dawn" 
+                     class="w-full h-48 sm:h-64 md:h-96 object-cover"
+                     loading="lazy">
             </div>
             
             <!-- Content -->
-            <div class="prose prose-invert prose-lg max-w-none">
+            <div class="prose prose-invert prose-lg max-w-none mb-12 sm:mb-16">
                 <div class="text-text-secondary font-roboto-condensed leading-relaxed space-y-4">
                     {{ .Content }}
                 </div>
             </div>
+            
+            <!-- Back Button -->
+            <div class="pt-8 sm:pt-12 border-t border-red-dawn/20">
+                <a href="{{ .Site.BaseURL }}news/" 
+                   class="inline-flex items-center space-x-2 text-red-dawn hover:text-red-crimson font-roboto-condensed transition-colors text-sm sm:text-base">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span class="text-sm sm:text-base">Назад к новостям</span>
+                </a>
+            </div>
         </article>
     </main>
+    
+    <!-- Schema.org BlogPosting + BreadcrumbList Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{ .Title }}",
+      "image": "{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}{{ .Site.BaseURL }}/images/general/news_general.webp{{ end }}",
+      "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+      "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+      "author": {
+        "@type": "Organization",
+        "name": "Red Dawn Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Red Dawn Airsoft Team",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://reddawn.ru/images/general/reddawn.webp"
+        }
+      },
+      "description": "{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 160 }}{{ end }}",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ .Permalink }}"
+      }
+    }
+    </script>
+    
+    <!-- Schema.org BreadcrumbList для SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Главная",
+          "item": "{{ .Site.BaseURL }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Базарим",
+          "item": "{{ .Site.BaseURL }}news/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ .Title }}",
+          "item": "{{ .Permalink }}"
+        }
+      ]
+    }
+    </script>
     
     {{ partial "footer.html" . }}
 </div>

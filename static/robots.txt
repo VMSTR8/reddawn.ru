@@ -1,0 +1,41 @@
+# Robots.txt для Red Dawn Airsoft Team
+# https://reddawn.ru/robots.txt
+
+# Основные правила для всех ботов
+User-agent: *
+Allow: /
+Allow: /news/
+Allow: /images/
+Allow: /css/
+Allow: /js/
+
+# Запретить индексацию служебных файлов
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_headers
+Disallow: /CNAME
+
+# Правила для Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+# Правила для Яндекса
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+# Правила для Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0.5
+
+# Sitemap
+Sitemap: https://reddawn.ru/sitemap.xml
+
+# Host для Яндекса (основной домен)
+Host: https://reddawn.ru
