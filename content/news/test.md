@@ -1,7 +1,7 @@
 ---
 title: "Test"
 date: 2025-11-13T17:30:05+03:00
-draft: true
+draft: false
 author: "Chief"
 ---
 
