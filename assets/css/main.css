@@ -39,11 +39,3 @@
     min-height: calc(var(--rd-viewport-unit) * 100) !important;
   }
 }
-
-@layer base {
-  /* Прячем фирменный бейдж Яндекс.Метрики, который появляется в левом нижнем углу */
-  .ym-advanced-informer {
-    display: none !important;
-  }
-}
-
