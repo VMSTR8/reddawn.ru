@@ -31,7 +31,7 @@
     <meta http-equiv="Cache-Control" content="public, max-age=3600, must-revalidate">
     
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{{ if and .IsPage (eq .Section "news") }}article{{ else }}website{{ end }}">
     <meta property="og:url" content="{{ .Permalink }}">
     <meta property="og:title" content="
       {{ if .IsHome }}
@@ -88,6 +88,9 @@
     
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ .Permalink }}">
+    {{ with .OutputFormats.Get "AMP" }}
+    <link rel="alternate" type="application/amp+xml" href="{{ .Permalink }}">
+    {{ end }}
     
     <!-- Hreflang для русского языка -->
     <link rel="alternate" hreflang="ru" href="{{ .Permalink }}">

@@ -38,4 +38,4 @@ Crawl-delay: 0.5
 Sitemap: https://reddawn.ru/sitemap.xml
 
 # Host для Яндекса (основной домен)
-Host: https://reddawn.ru
+Host: reddawn.ru

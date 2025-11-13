@@ -1,0 +1,44 @@
+{{- $pages := .Data.Pages -}}
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  {{- range $pages }}
+    {{- if not .Params.sitemap_exclude }}
+    <url>
+      <loc>{{ .Permalink }}</loc>
+      {{- with .Lastmod }}
+      <lastmod>{{ dateFormat "2006-01-02T15:04:05Z07:00" . }}</lastmod>
+      {{- end }}
+      {{- with .Sitemap.ChangeFreq }}
+      <changefreq>{{ . }}</changefreq>
+      {{- end }}
+      {{- with .Sitemap.Priority }}
+      <priority>{{ printf "%.1f" . }}</priority>
+      {{- end }}
+      {{- with .OutputFormats.Get "AMP" }}
+      <xhtml:link rel="amphtml" href="{{ .Permalink }}" />
+      {{- end }}
+      {{- $imageCandidates := slice -}}
+      {{- with .Params.image }}
+        {{- $imageCandidates = $imageCandidates | append (printf "%s%s" $.Site.BaseURL .) -}}
+      {{- end }}
+      {{- if and (not .Params.image) (eq .Kind "home") }}
+        {{- $imageCandidates = $imageCandidates | append (printf "%simages/general/title.webp" $.Site.BaseURL) -}}
+      {{- end }}
+      {{- if and (not .Params.image) (eq .Section "news") }}
+        {{- $imageCandidates = $imageCandidates | append (printf "%simages/general/news_general.webp" $.Site.BaseURL) -}}
+      {{- end }}
+      {{- range .Resources.ByType "image" }}
+        {{- $imageCandidates = $imageCandidates | append .Permalink -}}
+      {{- end }}
+      {{- range $image := uniq $imageCandidates }}
+      <image:image>
+        <image:loc>{{ $image }}</image:loc>
+      </image:image>
+      {{- end }}
+    </url>
+    {{- end }}
+  {{- end }}
+</urlset>
+

@@ -642,7 +642,19 @@
                 <!-- Intel Cards / News Grid -->
                 <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                     {{ range $index, $element := first 3 (where .Site.RegularPages "Section" "news") }}
-                    <a href="{{ .RelPermalink }}" class="intel-card group relative bg-gunmetal-gray/50 backdrop-blur-sm border border-red-dawn/20 hover:border-red-dawn/60 transition-all duration-300 overflow-hidden">
+                    {{- $cardImage := printf "%simages/general/news_thumb.webp" $.Site.BaseURL -}}
+                    {{- with .Params.image -}}
+                        {{- $cardImage = printf "%s%s" $.Site.BaseURL . -}}
+                    {{- end -}}
+                    <a href="{{ .RelPermalink }}" class="intel-card group relative bg-gunmetal-gray/50 backdrop-blur-sm border border-red-dawn/20 hover:border-red-dawn/60 transition-all duration-300 overflow-hidden" itemscope itemtype="https://schema.org/NewsArticle">
+                        <meta itemprop="url" content="{{ .Permalink }}">
+                        <meta itemprop="mainEntityOfPage" content="{{ .Permalink }}">
+                        <meta itemprop="datePublished" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+                        <meta itemprop="dateModified" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+                        <meta itemprop="image" content="{{ $cardImage }}">
+                        {{ with .Summary }}
+                        <meta itemprop="description" content="{{ . | plainify | htmlUnescape | replace "\"" "'" | truncate 160 }}">
+                        {{ end }}
                         <!-- Card Number -->
                         <div class="absolute top-0 left-0 bg-red-dawn text-black-base font-mono text-xs px-2 py-1 z-10">
                             FILE {{ add $index 1 }}/3
@@ -659,7 +671,7 @@
                             <img src="{{ if .Params.image }}{{ $.Site.BaseURL }}{{ .Params.image }}{{ else }}{{ $.Site.BaseURL }}/images/general/news_thumb.webp{{ end }}" 
                                  alt="{{ .Title }} - страйкбольная команда Red Dawn" 
                                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                                 loading="lazy">
+                                 loading="lazy" itemprop="image">
                             
                             <!-- Scan Effect on Hover -->
                             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-red-dawn/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none scan-line"></div>
@@ -672,12 +684,12 @@
                         <div class="p-4 sm:p-5 relative">
                             <!-- Date & Classification -->
                             <div class="flex items-center justify-between mb-2 text-xs font-mono text-text-secondary">
-                                <span>{{ .Date.Format "02.01.2006" }}</span>
+                                <time datetime="{{ .Date.Format "2006-01-02" }}" itemprop="datePublished">{{ .Date.Format "02.01.2006" }}</time>
                                 <span class="text-red-dawn">CLASSIFIED</span>
                             </div>
                             
                             <!-- Title -->
-                            <h3 class="text-base sm:text-lg font-russo text-text-primary tracking-wide mb-3 line-clamp-2 group-hover:text-red-dawn transition-colors">
+                            <h3 class="text-base sm:text-lg font-russo text-text-primary tracking-wide mb-3 line-clamp-2 group-hover:text-red-dawn transition-colors" itemprop="headline">
                                 {{ .Title }}
                             </h3>
                             
