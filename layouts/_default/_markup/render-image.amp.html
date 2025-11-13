@@ -1,0 +1,18 @@
+{{- $src := .Destination -}}
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+
+<div class="content-image-wrapper">
+    <amp-img 
+        src="{{ $src | relURL }}"
+        alt="{{ $alt }}"
+        {{- with $title }}
+        title="{{ . }}"
+        {{- end }}
+        width="800"
+        height="450"
+        layout="fill"
+        object-fit="cover"
+        class="content-image">
+    </amp-img>
+</div>

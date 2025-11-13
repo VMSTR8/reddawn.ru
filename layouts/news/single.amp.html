@@ -1,0 +1,473 @@
+<!doctype html>
+<html ⚡ lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>{{ .Title }} | Red Dawn Airsoft</title>
+    <link rel="canonical" href="{{ .Permalink }}">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    
+    <!-- AMP Boilerplate -->
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 160 }}{{ end }}">
+    <meta name="keywords" content="страйкбол Москва, Red Dawn, страйкбольная команда, {{ .Title }}">
+    <meta name="author" content="Red Dawn Team">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ .Title }} | Red Dawn Airsoft">
+    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 160 }}{{ end }}">
+    <meta property="og:image" content="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}{{ .Site.BaseURL }}/images/general/news_general.webp{{ end }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:type" content="article">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ .Title }} | Red Dawn Airsoft">
+    <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 160 }}{{ end }}">
+    <meta name="twitter:image" content="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}{{ .Site.BaseURL }}/images/general/news_general.webp{{ end }}">
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{ .Title }}",
+      "image": "{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}{{ .Site.BaseURL }}/images/general/news_general.webp{{ end }}",
+      "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+      "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+      "author": {
+        "@type": "Organization",
+        "name": "Red Dawn Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Red Dawn Airsoft Team",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://reddawn.ru/images/general/reddawn.webp"
+        }
+      },
+      "description": "{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 160 }}{{ end }}",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ .Permalink }}"
+      }
+    }
+    </script>
+    
+    <style amp-custom>
+        /* Red Dawn Color Palette */
+        :root {
+            --black-base: #0D0D0D;
+            --gunmetal-gray: #2A2A2A;
+            --red-dawn: #B62828;
+            --red-crimson: #7A1E1E;
+            --text-primary: #EAEAEA;
+            --text-secondary: #B0B0B0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--black-base);
+            color: var(--text-primary);
+            font-family: 'Roboto Condensed', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(182, 40, 40, 0.2);
+        }
+        
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.5rem;
+            color: var(--red-dawn);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+        
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--red-dawn);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding-top: 5rem;
+            padding-bottom: 3rem;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Breadcrumbs */
+        .breadcrumbs {
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumbs a {
+            color: var(--red-dawn);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            color: var(--red-crimson);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Article Header */
+        .article-header {
+            margin-bottom: 2rem;
+        }
+        
+        .article-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+        }
+        
+        @media (min-width: 640px) {
+            .article-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        /* Featured Image */
+        .featured-image {
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(182, 40, 40, 0.3);
+            position: relative;
+            width: 100%;
+            height: 450px;
+        }
+        
+        @media (max-width: 640px) {
+            .featured-image {
+                height: 250px;
+            }
+        }
+        
+        .featured-image amp-img {
+            object-fit: cover;
+        }
+        
+        /* Article Content */
+        .article-content {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            line-height: 1.75;
+            margin-bottom: 3rem;
+        }
+        
+        .article-content h2 {
+            font-family: 'Russo One', sans-serif;
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .article-content h3 {
+            font-family: 'Russo One', sans-serif;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.25rem;
+        }
+        
+        .article-content ul,
+        .article-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-content a {
+            color: var(--red-dawn);
+            text-decoration: underline;
+        }
+        
+        .article-content a:hover {
+            color: var(--red-crimson);
+        }
+        
+        .article-content strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        
+        .article-content code {
+            background-color: var(--gunmetal-gray);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .article-content blockquote {
+            border-left: 3px solid var(--red-dawn);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        .article-content .content-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid rgba(182, 40, 40, 0.2);
+        }
+        
+        @media (max-width: 640px) {
+            .article-content .content-image-wrapper {
+                height: 250px;
+            }
+        }
+        
+        .article-content .content-image {
+            object-fit: cover;
+        }
+        
+        .article-content figure {
+            margin: 1.5rem 0;
+        }
+        
+        .article-content figure amp-img {
+            margin: 0;
+        }
+        
+        /* Back Button */
+        .back-button-container {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(182, 40, 40, 0.2);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--red-dawn);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+        
+        .back-button:hover {
+            color: var(--red-crimson);
+        }
+        
+        .back-arrow {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: rgba(42, 42, 42, 0.5);
+            border-top: 1px solid rgba(182, 40, 40, 0.2);
+            padding: 2rem 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .footer-logo {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.25rem;
+            color: var(--red-dawn);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Tactical Accents */
+        .tactical-border {
+            position: relative;
+        }
+        
+        .tactical-border::before,
+        .tactical-border::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 2px solid var(--red-dawn);
+        }
+        
+        .tactical-border::before {
+            top: -1px;
+            left: -1px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .tactical-border::after {
+            bottom: -1px;
+            right: -1px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 640px) {
+            .article-title {
+                font-size: 1.75rem;
+            }
+            
+            .article-content {
+                font-size: 1rem;
+            }
+            
+            .article-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .article-content h3 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="{{ .Site.BaseURL }}" class="logo">RED DAWN</a>
+            <nav>
+                <a href="{{ .Site.BaseURL }}news/" class="nav-link">БАЗАРИМ</a>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <article class="container">
+            <!-- Breadcrumbs -->
+            <nav class="breadcrumbs" aria-label="breadcrumb">
+                <a href="{{ .Site.BaseURL }}">Главная</a>
+                <span class="breadcrumb-separator">/</span>
+                <a href="{{ .Site.BaseURL }}news/">Базарим</a>
+                <span class="breadcrumb-separator">/</span>
+                <span>{{ .Title }}</span>
+            </nav>
+            
+            <!-- Article Header -->
+            <header class="article-header">
+                <h1 class="article-title">{{ .Title }}</h1>
+                <div class="article-meta">
+                    <time datetime="{{ .Date.Format "2006-01-02" }}">
+                        {{ .Date.Format "02.01.2006" }}
+                    </time>
+                    {{ if .Params.author }}
+                    <span>Автор: {{ .Params.author }}</span>
+                    {{ end }}
+                </div>
+            </header>
+            
+            <!-- Featured Image -->
+            <div class="featured-image tactical-border">
+                <amp-img 
+                    src="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}{{ .Site.BaseURL }}/images/general/news_general.webp{{ end }}"
+                    alt="{{ .Title }} - страйкбольная команда Red Dawn"
+                    width="800"
+                    height="450"
+                    layout="fill"
+                    object-fit="cover">
+                </amp-img>
+            </div>
+            
+            <!-- Article Content -->
+            <div class="article-content">
+                {{ .Content }}
+            </div>
+            
+            <!-- Back Button -->
+            <div class="back-button-container">
+                <a href="{{ .Site.BaseURL }}news/" class="back-button">
+                    <svg class="back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Назад к новостям</span>
+                </a>
+            </div>
+        </article>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">RED DAWN</div>
+        <p>Московская страйкбольная команда © {{ now.Year }}</p>
+    </footer>
+</body>
+</html>

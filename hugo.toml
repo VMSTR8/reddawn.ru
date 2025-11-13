@@ -19,6 +19,20 @@ canonifyURLs = true
 [permalinks]
   news = "/news/:slug/"
 
+# Output formats для AMP
+[outputFormats]
+  [outputFormats.AMP]
+    mediaType = "text/html"
+    path = "amp"
+    baseName = "index"
+    isHTML = true
+    notAlternative = false
+
+[outputs]
+  home = ["HTML"]
+  page = ["HTML", "AMP"]
+  section = ["HTML"]
+
 [params]
   description = 'Московская страйкбольная команда Red Dawn. Профессиональная команда для игроков 21+. Тренировки, игры, снаряжение. Вступай в Red Dawn!'
   keywords = ['страйкбол Москва', 'страйкбольная команда Москва', 'страйкбол 21+', 'Red Dawn страйкбол', 'страйкбольная команда', 'airsoft Moscow', 'снаряжение для страйкбола', 'страйкбольные игры', 'присоединиться к команде страйкбол']

@@ -2,6 +2,9 @@
 <div class="w-full min-h-screen bg-black-base">
     {{ partial "header.html" . }}
     
+    <!-- AMP Link -->
+    <link rel="amphtml" href="{{ .RelPermalink }}amp/">
+    
     <main class="pt-20 sm:pt-24 pb-12 sm:pb-16">
         <article class="container mx-auto px-4 sm:px-6 max-w-4xl">
             <!-- Breadcrumbs -->
@@ -168,6 +171,13 @@
         padding: 0.2rem 0.4rem;
         border-radius: 0.25rem;
         font-size: 0.9em;
+    }
+    .prose img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        margin: 1.5rem 0;
     }
 </style>
 {{ end }}
