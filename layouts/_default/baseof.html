@@ -210,7 +210,7 @@
     {{ end }}
 </head>
 <body class="bg-black-base text-text-primary">
-    {{ if and hugo.IsProduction (ne .OutputFormat.Name "AMP") }}
+    {{ if hugo.IsProduction }}
         {{ partial "metrics/yandex-metrika.html" . }}
     {{ end }}
     {{ block "main" . }}{{ end }}
