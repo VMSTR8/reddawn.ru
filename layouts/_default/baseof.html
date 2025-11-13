@@ -91,6 +91,16 @@
     {{ with .OutputFormats.Get "AMP" }}
     <link rel="alternate" type="application/amp+xml" href="{{ .Permalink }}">
     {{ end }}
+    {{ if .IsNode }}
+      {{ with .Paginator }}
+        {{ if .HasPrev }}
+          <link rel="prev" href="{{ .Prev.URL | absURL }}">
+        {{ end }}
+        {{ if .HasNext }}
+          <link rel="next" href="{{ .Next.URL | absURL }}">
+        {{ end }}
+      {{ end }}
+    {{ end }}
     
     <!-- Hreflang для русского языка -->
     <link rel="alternate" hreflang="ru" href="{{ .Permalink }}">
@@ -116,35 +126,6 @@
     <!-- Preload для ускорения загрузки критичного CSS -->
     <link rel="preload" href="{{ $css.RelPermalink }}" as="style"{{ if hugo.IsProduction }} integrity="{{ $css.Data.Integrity }}"{{ end }}>
     <link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $css.Data.Integrity }}"{{ end }}>
-    
-    <!-- Критичный CSS встроен инлайн -->
-    <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar{width:8px}
-        ::-webkit-scrollbar-track{background:#0D0D0D}
-        ::-webkit-scrollbar-thumb{background:#B62828;border-radius:4px}
-        ::-webkit-scrollbar-thumb:hover{background:#7A1E1E}
-        
-        /* Smooth Scroll */
-        html{scroll-behavior:smooth}
-        
-        /* Grain Effect */
-        .bg-grain{background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")}
-        
-        /* Typography */
-        blockquote{border-left:4px solid #B62828;padding:1rem 1rem 1rem 3rem;margin:1rem 0;font-style:italic;color:#B0B0B0;background-color:rgba(42,42,42,.3);border-radius:4px;position:relative}
-        blockquote::before{content:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23B62828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 17h3l2-4V7h-6v6h3M6 17h3l2-4V7H5v6h3z"/></svg>');position:absolute;left:.5rem;top:1rem;width:24px;height:24px}
-        .prose h2{color:#EAEAEA;font-family:'Russo One',sans-serif;font-size:1.5rem;margin-top:2rem;margin-bottom:1rem}
-        .prose h3{color:#EAEAEA;font-family:'Russo One',sans-serif;font-size:1.25rem;margin-top:1.5rem;margin-bottom:.75rem}
-        @media(min-width:640px){.prose h2{font-size:2rem}.prose h3{font-size:1.5rem}}
-        .prose p{margin-bottom:1rem}
-        .prose ul,.prose ol{margin-left:1.5rem;margin-bottom:1rem}
-        .prose li{margin-bottom:.5rem}
-        .prose a{color:#B62828;text-decoration:underline}
-        .prose a:hover{color:#7A1E1E}
-        .prose strong{color:#EAEAEA;font-weight:700}
-        .prose code{background-color:#2A2A2A;padding:.2rem .4rem;border-radius:.25rem;font-size:.9em}
-    </style>
     
     <!-- Preload для некритичных CSS -->
     <link rel="preload" href="{{ "css/components.css" | relURL }}" as="style" onload="this.onload=null;this.rel='stylesheet'">

@@ -18,7 +18,6 @@ Disallow: /CNAME
 # Правила для Googlebot
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0.5
 
 # Правила для Яндекса
 User-agent: Yandex
@@ -32,7 +31,7 @@ Crawl-delay: 1
 # Правила для Bing
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 0.5
+Crawl-delay: 1
 
 # Sitemap
 Sitemap: https://reddawn.ru/sitemap.xml
