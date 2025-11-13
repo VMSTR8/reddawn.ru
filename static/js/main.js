@@ -11,6 +11,112 @@
 'use strict';
 
 /**
+ * Viewport Manager
+ * Keeps viewport-dependent CSS variables stable across browsers
+ */
+const ViewportManager = {
+    root: null,
+    viewportHeight: 0,
+    supportsDynamicUnits: false,
+    resizeRafId: null,
+    
+    /**
+     * Initialize viewport handling
+     */
+    init: function() {
+        this.root = document.documentElement;
+        this.supportsDynamicUnits = this.detectDynamicUnitSupport();
+        this.updateCustomProperties();
+        this.bindEvents();
+    },
+    
+    /**
+     * Detect support for modern viewport units
+     * @returns {boolean}
+     */
+    detectDynamicUnitSupport: function() {
+        if (typeof window.CSS === 'undefined' || typeof CSS.supports !== 'function') {
+            return false;
+        }
+        
+        return CSS.supports('height: 100dvh') || 
+               CSS.supports('height: 100svh') || 
+               CSS.supports('height: 100lvh');
+    },
+    
+    /**
+     * Bind resize and viewport change events
+     */
+    bindEvents: function() {
+        const self = this;
+        
+        const scheduleUpdate = function() {
+            self.queueUpdate();
+        };
+        
+        window.addEventListener('resize', scheduleUpdate, { passive: true });
+        window.addEventListener('orientationchange', scheduleUpdate);
+        
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', scheduleUpdate);
+            window.visualViewport.addEventListener('scroll', scheduleUpdate, { passive: true });
+        }
+    },
+    
+    /**
+     * Throttle viewport updates using rAF
+     */
+    queueUpdate: function() {
+        if (this.resizeRafId) {
+            return;
+        }
+        
+        const self = this;
+        this.resizeRafId = requestAnimationFrame(function() {
+            self.updateCustomProperties();
+            self.resizeRafId = null;
+        });
+    },
+    
+    /**
+     * Update CSS variables with the latest viewport measurements
+     */
+    updateCustomProperties: function() {
+        const height = this.getViewportHeight();
+        const width = window.innerWidth || document.documentElement.clientWidth || 0;
+        
+        this.viewportHeight = height;
+        
+        if (this.root) {
+            this.root.style.setProperty('--rd-viewport-height', height + 'px');
+            
+            if (!this.supportsDynamicUnits) {
+                this.root.style.setProperty('--rd-vh', (height / 100) + 'px');
+            } else {
+                this.root.style.removeProperty('--rd-vh');
+            }
+        }
+        
+        if (window.RedDawnViewport) {
+            window.RedDawnViewport.width = width;
+            window.RedDawnViewport.height = height;
+        }
+    },
+    
+    /**
+     * Get the current visual viewport height
+     * @returns {number}
+     */
+    getViewportHeight: function() {
+        if (window.visualViewport && typeof window.visualViewport.height === 'number') {
+            return Math.round(window.visualViewport.height);
+        }
+        
+        return Math.round(window.innerHeight || document.documentElement.clientHeight || 0);
+    }
+};
+
+/**
  * Main App Object
  * Namespace for all website functionality
  */
@@ -83,7 +189,7 @@ window.RedDawnViewport = {
     height: 0,
     update: function() {
         this.width = window.innerWidth;
-        this.height = window.innerHeight;
+        this.height = ViewportManager.viewportHeight || ViewportManager.getViewportHeight();
     }
 };
 
@@ -92,6 +198,9 @@ window.RedDawnViewport = {
  * Use requestIdleCallback for maximum performance - all work deferred to idle time
  */
 document.addEventListener('DOMContentLoaded', function() {
+    // Stabilize viewport units as early as possible
+    ViewportManager.init();
+    
     // Defer ALL initialization (including viewport cache) until browser is idle
     // This completely eliminates forced reflow during critical rendering path
     if (typeof requestIdleCallback !== 'undefined') {
