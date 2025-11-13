@@ -1,0 +1,12 @@
+{{/* Интеграция Google Analytics (gtag.js). Подключается в baseof.html только если указан ID и сборка в продакшене. */}}
+{{ with .Site.Params.googleAnalyticsID }}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ . }}');
+</script>
+{{ end }}
+
