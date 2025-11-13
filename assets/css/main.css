@@ -40,6 +40,10 @@
   }
 
   @media (min-width: 768px) {
+    .md\:min-h-safe {
+      min-height: var(--rd-safe-vh);
+    }
+
     .md\:h-safe {
       height: var(--rd-safe-vh);
     }
