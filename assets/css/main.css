@@ -18,3 +18,25 @@
   --font-roboto-condensed: 'Roboto Condensed', sans-serif;
 }
 
+@layer base {
+  :root {
+    --rd-viewport-unit: 1vh;
+  }
+
+  @supports (height: 1svh) {
+    :root {
+      --rd-viewport-unit: 1svh;
+    }
+  }
+}
+
+@layer utilities {
+  .h-screen {
+    height: calc(var(--rd-viewport-unit) * 100) !important;
+  }
+
+  .min-h-screen {
+    min-height: calc(var(--rd-viewport-unit) * 100) !important;
+  }
+}
+
