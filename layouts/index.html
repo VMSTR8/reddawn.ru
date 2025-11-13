@@ -1,11 +1,11 @@
 {{/* Homepage Template - Main landing page with snap-scroll sections */}}
 {{ define "main" }}
-<div class="w-full min-h-screen bg-black-base">
+<div class="w-full min-h-safe bg-black-base">
     {{ partial "header.html" . }}
     
-    <main class="md:snap-y md:snap-mandatory md:h-screen md:overflow-y-scroll h-screen">
+    <main class="md:snap-y md:snap-mandatory md:h-safe md:overflow-y-scroll h-safe">
         <!-- Hero Section -->
-        <section id="hero-section" class="relative min-h-screen w-full snap-start flex items-center justify-start overflow-hidden">
+        <section id="hero-section" class="relative min-h-safe w-full snap-start flex items-center justify-start overflow-hidden">
             <!-- Background Image with Overlay -->
             <div class="absolute inset-0 z-0">
                 <img src="{{ .Site.BaseURL }}/images/general/title.webp" 
@@ -42,7 +42,7 @@
         </section>
         
         <!-- About Section - Recruitment Requirements -->
-        <section id="about-section" class="relative min-h-screen w-full snap-start flex items-center justify-center pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden">
+        <section id="about-section" class="relative min-h-safe w-full snap-start flex items-center justify-center pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden">
             <!-- Background Image with Overlay -->
             <div class="absolute inset-0 z-0">
                 <img src="{{ .Site.BaseURL }}/images/team/operator_selection.webp" 
@@ -255,7 +255,7 @@
                                 <p class="text-sm sm:text-base font-roboto-condensed text-text-secondary leading-relaxed">
                                     <span class="text-red-dawn font-bold">Red Dawn</span> — страйкбольная команда, коих черт знает сколько в Москве и Подмосковье.
                                     Но раз нашел нас и наши основные требования тебя устраивают, значит ты именно тот, кто нам нужен! 
-                                    Мы не демонстрируем десятки фоточек с игр и тренировок, ниже посмотри наш экип, <a href="/news/" class="text-red-dawn hover:text-red-crimson transition-colors underline">почитай наш блог</a> и смело 
+                                    Ниже посмотри наш экип, <a href="/news/" class="text-red-dawn hover:text-red-crimson transition-colors underline">почитай наш блог</a> и смело 
                                     отправляй заявку на вступление. Одна тренировка — и ты в нашей команде!
                                 </p>
                             </div>
@@ -266,7 +266,7 @@
         </section>
         
         <!-- Equipment Section - Loadout Selection -->
-        <section id="equipment-section" class="relative min-h-screen w-full snap-start flex items-center justify-center bg-black-base pt-20 sm:pt-24 pb-16 md:py-24 overflow-hidden">
+        <section id="equipment-section" class="relative min-h-safe w-full snap-start flex items-center justify-center bg-black-base pt-20 sm:pt-24 pb-16 md:py-24 overflow-hidden">
             <!-- Hexagon Pattern Background -->
             <div class="absolute inset-0 z-0 opacity-5">
                 <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -587,7 +587,7 @@
         </section>
         
         <!-- Training Section - Military Briefing Style -->
-        <section class="relative min-h-screen w-full snap-start flex items-center justify-center bg-black-base pt-20 sm:pt-24 pb-16 md:py-24 overflow-hidden">
+        <section class="relative min-h-safe w-full snap-start flex items-center justify-center bg-black-base pt-20 sm:pt-24 pb-16 md:py-24 overflow-hidden">
             <!-- Tactical Grid Background -->
             <div class="absolute inset-0 z-0 opacity-10">
                 <div class="absolute inset-0" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 49px, #B62828 49px, #B62828 50px), repeating-linear-gradient(90deg, transparent, transparent 49px, #B62828 49px, #B62828 50px);"></div>
@@ -719,7 +719,7 @@
         </section>
         
         <!-- Join Section -->
-        <section id="join" class="relative min-h-screen w-full snap-start flex flex-col">
+        <section id="join" class="relative min-h-safe w-full snap-start flex flex-col">
             <!-- Background Image with Overlay -->
             <div class="absolute inset-0 z-0">
                 <img src="{{ .Site.BaseURL }}/images/team/join.webp" 

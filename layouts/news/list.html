@@ -5,7 +5,7 @@
 
 {{ if and (not $hasAnyNews) (eq .Paginator.PageNumber 1) }}
 <!-- Нет новостей вообще - показываем красивую заглушку -->
-<div class="w-full min-h-screen bg-black-base flex flex-col">
+<div class="w-full min-h-safe bg-black-base flex flex-col">
     {{ partial "header.html" . }}
     
     <main class="flex-1 pt-20 sm:pt-24 pb-16">
@@ -92,7 +92,7 @@
 </div>
 {{ else if not $validPage }}
 <!-- Несуществующая страница пагинации - показываем 404 -->
-<div class="w-full min-h-screen bg-black-base flex flex-col">
+<div class="w-full min-h-safe bg-black-base flex flex-col">
     {{ partial "header.html" . }}
     
     <main class="flex-1 pt-20 sm:pt-24 pb-16">
@@ -120,7 +120,7 @@
     {{ partial "footer.html" . }}
 </div>
 {{ else }}
-<div class="w-full min-h-screen bg-black-base flex flex-col">
+<div class="w-full min-h-safe bg-black-base flex flex-col">
     {{ partial "header.html" . }}
     
     <main class="flex-1 pt-20 sm:pt-24 pb-16">
