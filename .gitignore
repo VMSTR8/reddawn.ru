@@ -41,7 +41,7 @@ yarn.lock
 
 # AI instructions and internal documentation
 .github/copilot-instructions.md
-CONTENT_STRUCTURE.md
+.cursor/rules/reddawn-rule.mdc
 
 # Environment variables
 .env
