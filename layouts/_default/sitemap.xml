@@ -1,9 +1,8 @@
-{{- $pages := .Data.Pages -}}
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n" | safeHTML -}}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  {{- range $pages }}
+  {{- range .Data.Pages }}
     {{- if not .Params.sitemap_exclude }}
     <url>
       <loc>{{ .Permalink }}</loc>
@@ -41,4 +40,3 @@
     {{- end }}
   {{- end }}
 </urlset>
-
