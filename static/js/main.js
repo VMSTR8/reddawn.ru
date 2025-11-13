@@ -82,53 +82,10 @@ window.RedDawnViewport = {
     width: 0,
     height: 0,
     update: function() {
-        const viewport = window.visualViewport;
-        
-        if (viewport) {
-            this.width = viewport.width;
-            this.height = viewport.height;
-        } else {
-            this.width = window.innerWidth;
-            this.height = window.innerHeight;
-        }
-        
-        document.documentElement.style.setProperty('--vh', (this.height * 0.01) + 'px');
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
     }
 };
-
-/**
- * Schedule viewport updates to the next animation frame
- * Ensures multiple resize/scroll events are debounced
- */
-const scheduleViewportUpdate = (function() {
-    let rafId = null;
-    
-    return function() {
-        if (rafId) {
-            cancelAnimationFrame(rafId);
-        }
-        
-        rafId = requestAnimationFrame(function() {
-            rafId = null;
-            window.RedDawnViewport.update();
-        });
-    };
-})();
-
-// Initialize CSS viewport variables as soon as possible
-scheduleViewportUpdate();
-
-// Listen to visual viewport changes (mobile address bar, PWA chrome)
-if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', scheduleViewportUpdate);
-    window.visualViewport.addEventListener('scroll', scheduleViewportUpdate);
-}
-
-// Handle orientation changes fallback
-window.addEventListener('orientationchange', function() {
-    // Allow some time for viewport metrics to settle
-    setTimeout(scheduleViewportUpdate, 60);
-}, { passive: true });
 
 /**
  * Initialize app when DOM is fully loaded
