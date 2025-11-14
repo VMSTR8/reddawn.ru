@@ -44,5 +44,8 @@ canonifyURLs = true
     [markup.goldmark.renderer]
       unsafe = true
 
+[frontmatter]
+  lastmod = ["lastmod", ":git", "date"]
+
 # Настройки для GitHub Pages
 publishDir = 'public'
