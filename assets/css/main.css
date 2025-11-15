@@ -145,3 +145,15 @@
     min-height: calc(var(--rd-viewport-unit) * 100) !important;
   }
 }
+
+/* Fix для мобильных устройств: предотвращаем видимость следующей секции */
+@media (max-width: 767px) {
+  main {
+    position: relative;
+  }
+  
+  main > section {
+    position: relative;
+    isolation: isolate;
+  }
+}
