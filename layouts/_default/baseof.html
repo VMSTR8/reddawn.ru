@@ -14,17 +14,17 @@
     </title>
     
     <!-- Dynamic description: -->
-    <meta name="description" content="
-      {{ if .IsHome }}
-        {{ .Site.Params.description }}
-      {{ else if .Description }}
-        {{ .Description }}
-      {{ else if .Summary }}
-        {{ .Summary | truncate 160 }}
-      {{ else }}
-        {{ .Site.Params.description }}
-      {{ end }}
-    ">
+    <meta name="description" content="{{- if .IsHome -}}
+        {{- .Site.Params.description | default "Московская страйкбольная команда Red Dawn. Профессиональная команда для игроков 21+. Тренировки, игры, снаряжение." -}}
+      {{- else if and .Description (ne .Description "") -}}
+        {{- .Description | plainify | htmlUnescape | truncate 160 -}}
+      {{- else if .Summary -}}
+        {{- .Summary | plainify | htmlUnescape | truncate 160 -}}
+      {{- else if .Content -}}
+        {{- .Content | plainify | htmlUnescape | truncate 160 -}}
+      {{- else -}}
+        {{- .Site.Params.description | default "Московская страйкбольная команда Red Dawn. Профессиональная команда для игроков 21+. Тренировки, игры, снаряжение." -}}
+      {{- end -}}">
     <meta name="keywords" content="{{ delimit .Site.Params.keywords ", " }}">
     
     <!-- Cache Control для статических ресурсов -->
@@ -42,17 +42,17 @@
         {{ .Title }} - {{ .Site.Title }}
       {{ end }}
     ">
-    <meta property="og:description" content="
-      {{ if .IsHome }}
-        {{ .Site.Params.description }}
-      {{ else if .Description }}
-        {{ .Description }}
-      {{ else if .Summary }}
-        {{ .Summary | truncate 160 }}
-      {{ else }}
-        {{ .Site.Params.description }}
-      {{ end }}
-    ">
+    <meta property="og:description" content="{{- if .IsHome -}}
+        {{- .Site.Params.description | default "Московская страйкбольная команда Red Dawn. Профессиональная команда для игроков 21+. Тренировки, игры, снаряжение." -}}
+      {{- else if and .Description (ne .Description "") -}}
+        {{- .Description | plainify | htmlUnescape | truncate 160 -}}
+      {{- else if .Summary -}}
+        {{- .Summary | plainify | htmlUnescape | truncate 160 -}}
+      {{- else if .Content -}}
+        {{- .Content | plainify | htmlUnescape | truncate 160 -}}
+      {{- else -}}
+        {{- .Site.Params.description | default "Московская страйкбольная команда Red Dawn. Профессиональная команда для игроков 21+. Тренировки, игры, снаряжение." -}}
+      {{- end -}}">
     <meta property="og:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ "images/general/title.webp" | absURL }}{{ end }}">
     
     <!-- Twitter -->
@@ -67,24 +67,24 @@
         {{ .Title }} - {{ .Site.Title }}
       {{ end }}
     ">
-    <meta property="twitter:description" content="
-      {{ if .IsHome }}
-        {{ .Site.Params.description }}
-      {{ else if .Description }}
-        {{ .Description }}
-      {{ else if .Summary }}
-        {{ .Summary | truncate 160 }}
-      {{ else }}
-        {{ .Site.Params.description }}
-      {{ end }}
-    ">
+    <meta property="twitter:description" content="{{- if .IsHome -}}
+        {{- .Site.Params.description | default "Московская страйкбольная команда Red Dawn. Профессиональная команда для игроков 21+. Тренировки, игры, снаряжение." -}}
+      {{- else if and .Description (ne .Description "") -}}
+        {{- .Description | plainify | htmlUnescape | truncate 160 -}}
+      {{- else if .Summary -}}
+        {{- .Summary | plainify | htmlUnescape | truncate 160 -}}
+      {{- else if .Content -}}
+        {{- .Content | plainify | htmlUnescape | truncate 160 -}}
+      {{- else -}}
+        {{- .Site.Params.description | default "Московская страйкбольная команда Red Dawn. Профессиональная команда для игроков 21+. Тренировки, игры, снаряжение." -}}
+      {{- end -}}">
     <meta property="twitter:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ "images/general/title.webp" | absURL }}{{ end }}">
     
     <!-- Favicon -->
-    <link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
-    <link rel="icon" href="{{ "images/favicon/favicon.ico" | relURL }}" sizes="any">
-    <link rel="icon" href="{{ "images/favicon/favicon.svg" | relURL }}" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="{{ "images/favicon/apple-touch-icon.png" | relURL }}">
+    <link rel="icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ "images/favicon/favicon-96x96.png" | relURL }}">
+    <link rel="icon" type="image/svg+xml" href="{{ "images/favicon/favicon.svg" | relURL }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ "images/favicon/apple-touch-icon.png" | relURL }}">
     <link rel="manifest" href="{{ "images/favicon/site.webmanifest" | relURL }}">
     
     <!-- Canonical URL -->
