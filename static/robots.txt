@@ -8,6 +8,7 @@ Allow: /news/
 Allow: /images/
 Allow: /css/
 Allow: /js/
+Allow: /favicon.ico
 
 # Запретить индексацию служебных файлов
 Disallow: /admin/
