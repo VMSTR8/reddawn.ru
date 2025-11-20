@@ -2,17 +2,25 @@
 {{- $alt := .Text -}}
 {{- $title := .Title -}}
 
-<div class="content-image-wrapper">
-    <amp-img 
-        src="{{ $src | relURL }}"
-        alt="{{ $alt }}"
-        {{- with $title }}
-        title="{{ . }}"
-        {{- end }}
-        width="800"
-        height="450"
-        layout="fill"
-        object-fit="cover"
-        class="content-image">
-    </amp-img>
-</div>
+<figure class="content-image-wrapper">
+    <div class="content-image-container">
+        <amp-img 
+            src="{{ $src | relURL }}"
+            alt="{{ $alt }}"
+            {{- with $title }}
+            title="{{ . }}"
+            {{- end }}
+            width="800"
+            height="450"
+            layout="fill"
+            object-fit="cover"
+            class="content-image">
+        </amp-img>
+    </div>
+    {{- with $title }}
+    <figcaption class="content-image-caption">
+        <div class="content-image-caption-line"></div>
+        <span class="content-image-caption-text">{{ . }}</span>
+    </figcaption>
+    {{- end }}
+</figure>

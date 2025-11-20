@@ -1,0 +1,21 @@
+{{- $src := .Destination -}}
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+
+<figure class="content-image-wrapper">
+    <img 
+        src="{{ $src | relURL }}"
+        alt="{{ $alt }}"
+        {{- with $title }}
+        title="{{ . }}"
+        {{- end }}
+        class="content-image"
+        loading="lazy">
+    {{- with $title }}
+    <figcaption class="content-image-caption">
+        <div class="content-image-caption-line"></div>
+        <span class="content-image-caption-text">{{ . }}</span>
+    </figcaption>
+    {{- end }}
+</figure>
+

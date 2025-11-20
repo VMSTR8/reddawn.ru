@@ -134,6 +134,52 @@
     border-radius: 0.25rem;
     font-size: 0.9em;
   }
+
+  .prose img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  /* Стили для изображений с подписями через render-image hook */
+  .content-image-wrapper {
+    margin: 1.5rem 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .content-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .content-image-caption {
+    padding: 0;
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content-image-caption-line {
+    width: 80%;
+    max-width: 400px;
+    height: 2px;
+    background-color: #B62828;
+    margin-bottom: 0.75rem;
+  }
+
+  .content-image-caption-text {
+    color: #B0B0B0;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 0.875rem;
+    text-align: center;
+    line-height: 1.5;
+  }
 }
 
 @layer utilities {
