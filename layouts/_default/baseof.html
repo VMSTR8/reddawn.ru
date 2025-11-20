@@ -25,7 +25,18 @@
       {{- else -}}
         {{- .Site.Params.description | default "Московская страйкбольная команда Red Dawn. Профессиональная команда для игроков 21+. Тренировки, игры, снаряжение." -}}
       {{- end -}}">
-    <meta name="keywords" content="{{ delimit .Site.Params.keywords ", " }}">
+    {{- $keywords := "" -}}
+    {{- if .Params.keywords -}}
+      {{- $keywords = .Params.keywords -}}
+      {{- if .Params.tags -}}
+        {{- $keywords = printf "%s, %s" $keywords .Params.tags -}}
+      {{- end -}}
+    {{- else if .Params.tags -}}
+      {{- $keywords = .Params.tags -}}
+    {{- else -}}
+      {{- $keywords = delimit .Site.Params.keywords ", " -}}
+    {{- end -}}
+    <meta name="keywords" content="{{ $keywords }}">
     
     <!-- Cache Control для статических ресурсов -->
     <meta http-equiv="Cache-Control" content="public, max-age=3600, must-revalidate">

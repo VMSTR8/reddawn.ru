@@ -72,6 +72,7 @@
       "@context": "https://schema.org",
       "@type": "NewsArticle",
       "headline": {{ .Title | jsonify }},
+      "url": "{{ .Permalink }}",
       "image": [
         {{ $articleImage | jsonify }}
       ],
@@ -84,21 +85,66 @@
       "publisher": {
         "@type": "Organization",
         "name": "Red Dawn Airsoft Team",
+        "url": "https://reddawn.ru",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://reddawn.ru/images/general/reddawn.webp"
-        }
+          "url": "https://reddawn.ru/images/general/reddawn.webp",
+          "width": 512,
+          "height": 512
+        },
+        "sameAs": [
+          "https://t.me/reddawnairsoft"
+        ]
       },
       "description": {{ with .Description }}{{ . | plainify | jsonify }}{{ else }}{{ .Summary | truncate 160 | plainify | jsonify }}{{ end }},
-      "articleSection": "Новости",
+      {{- $articleSection := "Новости" -}}
+      {{- if .Params.tags -}}
+        {{- $tgType := printf "%T" .Params.tags -}}
+        {{- if eq $tgType "[]string" -}}
+          {{- $articleSection = index .Params.tags 0 -}}
+        {{- else -}}
+          {{- $tagsArray := split (.Params.tags | string) ", " -}}
+          {{- $articleSection = index $tagsArray 0 -}}
+        {{- end -}}
+      {{- end -}}
+      "articleSection": {{ $articleSection | jsonify }},
+      {{- $keywords := slice -}}
+      {{- if .Params.keywords -}}
+        {{- $kwType := printf "%T" .Params.keywords -}}
+        {{- if eq $kwType "[]string" -}}
+          {{- $keywords = $keywords | union .Params.keywords -}}
+        {{- else -}}
+          {{- $keywords = $keywords | union (split (.Params.keywords | string) ", ") -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if .Params.tags -}}
+        {{- $tgType := printf "%T" .Params.tags -}}
+        {{- if eq $tgType "[]string" -}}
+          {{- $keywords = $keywords | union .Params.tags -}}
+        {{- else -}}
+          {{- $keywords = $keywords | union (split (.Params.tags | string) ", ") -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if gt (len $keywords) 0 -}}
+        {{- $trimmedKeywords := slice -}}
+        {{- range $keywords -}}
+          {{- $trimmedKeywords = $trimmedKeywords | append (trim . " ") -}}
+        {{- end -}}
+      "keywords": {{ $trimmedKeywords | jsonify }},
+      {{- end -}}
       "articleBody": {{ .Plain | plainify | jsonify }},
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "{{ .Permalink }}"
+        "@id": "{{ .Permalink }}",
+        "url": "{{ .Permalink }}"
       },
       "isAccessibleForFree": true,
       "wordCount": {{ .WordCount }},
-      "inLanguage": "{{ .Site.Language.Lang }}"
+      "inLanguage": "{{ .Site.Language.Lang }}",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["h1", "h2"]
+      }
     }
     </script>
     

@@ -1,0 +1,15 @@
+{{- $destination := .Destination -}}
+{{- $text := .Text -}}
+{{- $title := .Title -}}
+{{- $isExternal := false -}}
+
+{{- /* Проверяем, является ли ссылка внешней */ -}}
+{{- if or (hasPrefix $destination "http://") (hasPrefix $destination "https://") -}}
+  {{- $baseURL := .Page.Site.BaseURL | strings.TrimSuffix "/" -}}
+  {{- if not (hasPrefix $destination $baseURL) -}}
+    {{- $isExternal = true -}}
+  {{- end -}}
+{{- end -}}
+
+<a href="{{ $destination }}"{{ if $isExternal }} target="_blank" rel="noopener noreferrer nofollow"{{ end }}{{ with $title }} title="{{ . }}"{{ end }}>{{ $text }}</a>
+
