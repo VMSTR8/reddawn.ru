@@ -1,4 +1,4 @@
-{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n" | safeHTML -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" | safeHTML -}}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
@@ -6,8 +6,10 @@
     {{- if not .Params.sitemap_exclude }}
     <url>
       <loc>{{ .Permalink }}</loc>
-      {{- with .Lastmod }}
-      <lastmod>{{ dateFormat "2006-01-02T15:04:05Z07:00" . }}</lastmod>
+      {{- if .Lastmod }}
+      <lastmod>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
+      {{- else if .Date }}
+      <lastmod>{{ .Date.Format "2006-01-02T15:04:05-07:00" }}</lastmod>
       {{- end }}
       {{- with .Sitemap.ChangeFreq }}
       <changefreq>{{ . }}</changefreq>
@@ -31,10 +33,12 @@
       {{- range .Resources.ByType "image" }}
         {{- $imageCandidates = $imageCandidates | append .Permalink -}}
       {{- end }}
-      {{- range $image := uniq $imageCandidates }}
+      {{- if gt (len $imageCandidates) 0 }}
+        {{- range $image := uniq $imageCandidates }}
       <image:image>
         <image:loc>{{ $image }}</image:loc>
       </image:image>
+        {{- end }}
       {{- end }}
     </url>
     {{- end }}
