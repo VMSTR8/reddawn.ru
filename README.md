@@ -1,77 +1,31 @@
-# Red Dawn - Hugo Site
+# Red Dawn
 
-Red Dawn team website built with Hugo and hosted on GitHub Pages.
+Сайт московской страйкбольной команды Red Dawn.
 
-## Requirements
+## О проекте
 
-- Hugo v0.151.0 or newer (install via Homebrew: `brew install hugo`)
+Веб-сайт для страйкбольной команды Red Dawn, включающий информацию о команде, новостной раздел, галерею и контактную информацию. Сайт оптимизирован для мобильных устройств и имеет поддержку AMP версий для ускоренной загрузки на мобильных платформах.
 
-## Local Development
+## Используемые технологии
 
-### Start Dev Server
+### Основной стек
 
-```bash
-hugo server -D
-```
+- **Hugo** — статический генератор сайтов для быстрой генерации HTML
+- **Tailwind CSS v4** — utility-first CSS фреймворк для стилизации
+- **PostCSS** — инструмент для трансформации CSS с поддержкой плагинов
+- **Autoprefixer** — автоматическое добавление vendor prefixes в CSS
 
-Site will be available at: http://localhost:1313/
+### Дополнительные технологии
 
-### Production Build
+- **AMP (Accelerated Mobile Pages)** — для создания ускоренных мобильных версий страниц
+- **GitHub Pages** — хостинг статического сайта
+- **Google Analytics** — аналитика посещений
 
-```bash
-hugo --gc --minify
-```
+## Особенности
 
-Built site will be in the `public/` folder
-
-## Project Structure
-
-```
-reddawn.ru/
-├── content/          # Site content (markdown files)
-│   └── news/        # News articles
-├── layouts/         # HTML templates
-│   ├── _default/    # Base templates
-│   ├── partials/    # Reusable components (header, footer)
-│   └── news/        # News templates
-├── static/          # Static files (images, CSS, JS)
-├── hugo.toml        # Hugo configuration
-└── .github/         # GitHub Actions for auto-deploy
-```
-
-## Adding a News Article
-
-Create a new markdown file in `content/news/`:
-
-```bash
-hugo new content/news/my-news.md
-```
-
-Or manually create a file with this content:
-
-```markdown
----
-title: "Article Title"
-date: 2025-11-03
-draft: false
----
-
-Article text...
-
-## Subheading
-
-More text...
-```
-
-## Deploying to GitHub Pages
-
-1. Ensure GitHub Pages is enabled in your GitHub repository settings
-2. Go to Settings → Pages and select Source: GitHub Actions
-3. Every push to the `main` branch will automatically trigger deployment
-
-## Technologies
-
-- **Hugo** - static site generator
-- **Tailwind CSS** - via CDN for styling
-- **GitHub Pages** - hosting
-- **GitHub Actions** - automatic deployment
+- Полностью адаптивный дизайн для всех устройств
+- Поддержка AMP версий новостных страниц
+- SEO оптимизация с автоматической генерацией sitemap.xml и robots.txt
+- Интеграция аналитики для отслеживания статистики
+- Кастомные стили с использованием Tailwind CSS и PostCSS
+- Оптимизированные изображения в формате WebP
