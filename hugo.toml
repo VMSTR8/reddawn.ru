@@ -9,6 +9,7 @@ disableKinds = ['taxonomy', 'term']
 # SEO настройки
 enableRobotsTXT = true
 canonifyURLs = true
+enableGitInfo = true
 
 [sitemap]
   changefreq = 'weekly'
