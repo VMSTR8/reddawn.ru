@@ -91,11 +91,12 @@
       {{- end -}}">
     <meta property="twitter:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ "images/general/title.webp" | absURL }}{{ end }}">
     
-    <!-- Favicon -->
+    <!-- Favicon - ICO первым для лучшей поддержки поисковиками (Яндекс, Google) -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}">
+    <link rel="icon" type="image/x-icon" sizes="32x32" href="{{ "favicon.ico" | relURL }}">
     <link rel="icon" type="image/svg+xml" href="{{ "images/favicon/favicon.svg" | relURL }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ "images/favicon/favicon-96x96.png" | relURL }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{ "images/favicon/favicon-96x96.png" | relURL }}">
-    <link rel="icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ "images/favicon/apple-touch-icon.png" | relURL }}">
     <link rel="manifest" href="{{ "images/favicon/site.webmanifest" | relURL }}">
     
